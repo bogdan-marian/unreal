@@ -1,0 +1,25 @@
+Saved
+.vscode
+.vs
+*.VC.db
+*.opensdf
+*.opendb
+*.sdf
+*.sln
+*.suo
+*.xcodeproj
+*.xcworkspace
+
+# Unreal Engine transient folders (Modified for Monorepo)
+**/Binaries/
+**/Build/
+**/Intermediate/
+**/DerivedDataCache/
+**/Saved/
+
+# macOS specific
+.DS_Store
+
+# Rider / JetBrains specific
+.idea/
+cmake-build-*/
