@@ -23,7 +23,25 @@ void UMover::BeginPlay()
 	float* FloatPtr = &MyFloat;
 	
 	float Result = *FloatPtr + 5; // 15.0f;
-	UE_LOG(LogTemp, Display, TEXT("Result: %f"), Result)
+	UE_LOG(LogTemp, Display, TEXT("Result: %f"), Result);
+	
+	*FloatPtr = 30.0f;
+	UE_LOG(LogTemp, Display, TEXT("MyFloat: %f"), MyFloat);
+	UE_LOG(LogTemp, Display, TEXT("*FloatPtr: %f"), *FloatPtr);
+	
+	UE_LOG(LogTemp, Display, TEXT("&MyFloat: %p"), &MyFloat);
+	UE_LOG(LogTemp, Display, TEXT("*FloatPtr: %p"), FloatPtr);
+	
+	FVector MyVector = FVector(1.0f, 1.0f, 1.0f);
+	
+	FVector* VectorPtr = &MyVector;
+	(*VectorPtr).X = 2.0f;
+	VectorPtr -> Y = 3.0f;
+	VectorPtr -> Z = 4.0f;
+	
+	FString MyVectorString = MyVector.ToCompactString();
+	UE_LOG(LogTemp, Display, TEXT("MyVector: %s"), *MyVectorString);
+	
 }
 
 
