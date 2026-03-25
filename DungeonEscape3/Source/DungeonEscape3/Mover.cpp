@@ -19,8 +19,11 @@ void UMover::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
+	float MyFloat = 10.0f;
+	float* FloatPtr = &MyFloat;
 	
+	float Result = *FloatPtr + 5; // 15.0f;
+	UE_LOG(LogTemp, Display, TEXT("Result: %f"), Result)
 }
 
 
@@ -29,6 +32,5 @@ void UMover::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponent
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	UE_LOG(LogTemp, Display, TEXT("Mover is ticking..."));
 }
 
