@@ -23,6 +23,10 @@ void UMover::BeginPlay()
 
 	MyOwner->GetActorNameOrLabel();
 	UE_LOG(LogTemp, Display, TEXT("MY OWNER IS CALLED %s"), *MyOwner -> GetActorNameOrLabel());
+
+	StartLocation = GetOwner()->GetActorLocation();
+	UE_LOG(LogTemp, Display, TEXT("%s is at location %s"), *GetOwner()->GetActorNameOrLabel(),
+	       *StartLocation.ToCompactString());
 }
 
 
@@ -30,4 +34,8 @@ void UMover::BeginPlay()
 void UMover::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	FVector CurrentLocation = GetOwner()->GetActorLocation();
+	CurrentLocation.Z = CurrentLocation.Z + 100.0f * DeltaTime;
+	GetOwner()->SetActorLocation(CurrentLocation);
 }
