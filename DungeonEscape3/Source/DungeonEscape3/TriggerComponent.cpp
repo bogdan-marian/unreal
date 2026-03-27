@@ -3,3 +3,15 @@
 
 #include "TriggerComponent.h"
 
+void UTriggerComponent::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	UE_LOG(LogTemp, Display, TEXT("Trigger started playing!"));
+}
+
+void UTriggerComponent::TickComponent(float DeltaTime, ELevelTick TickType,
+	FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+}
