@@ -16,12 +16,12 @@ void UTriggerComponent::BeginPlay()
 	
 	UE_LOG(LogTemp, Display, TEXT("TriggerComponent started playing!"));
 	
-	if (MoverActor != nullptr)
+	if (MoverActor) // MoverActor != nullptr
 	{
 		// we play
 		Mover = MoverActor -> FindComponentByClass<UMover>();
 		
-		if (Mover != nullptr)
+		if (Mover) // Mover != nullptr
 		{
 			UE_LOG(LogTemp, Display, TEXT("Mover is found!"));
 			Mover -> ShouldMove = true;
