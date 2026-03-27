@@ -57,8 +57,8 @@ void UTriggerComponent::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AAct
 	UE_LOG(LogTemp, Display, TEXT("TriggerComponent is overlapping!"));
 
 	bool HasTag = false;
-	
-	if (Mover && OtherActor->ActorHasTag("PressurePlateActivator"))
+
+	if (Mover && OtherActor && OtherActor->ActorHasTag("PressurePlateActivator"))
 	{
 		Mover->ShouldMove = true;
 	}
@@ -69,7 +69,7 @@ void UTriggerComponent::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor
 {
 	UE_LOG(LogTemp, Display, TEXT("TriggerComponent is not overlapping!"));
 
-	if (Mover && OtherActor->ActorHasTag("PressurePlateActivator"))
+	if (Mover && OtherActor && OtherActor->ActorHasTag("PressurePlateActivator"))
 	{
 		Mover->ShouldMove = false;
 	}
