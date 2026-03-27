@@ -35,8 +35,11 @@ void UTriggerComponent::BeginPlay()
 		UE_LOG(LogTemp, Error, TEXT("MoverActor is null!"));
 	}
 
-	OnComponentBeginOverlap.AddDynamic(this, &UTriggerComponent::OnOverlapBegin);
-	OnComponentEndOverlap.AddDynamic(this, &UTriggerComponent::OnOverlapEnd);
+	if (IsPressurePlate)
+	{
+		OnComponentBeginOverlap.AddDynamic(this, &UTriggerComponent::OnOverlapBegin);
+		OnComponentEndOverlap.AddDynamic(this, &UTriggerComponent::OnOverlapEnd);
+	}
 }
 
 void UTriggerComponent::TickComponent(float DeltaTime, ELevelTick TickType,
@@ -55,7 +58,8 @@ void UTriggerComponent::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AAct
 	if (Mover)
 	{
 		Mover->ShouldMove = true;
-	}else
+	}
+	else
 	{
 		UE_LOG(LogTemp, Error, TEXT("Mover is null!"));
 	}
@@ -68,7 +72,9 @@ void UTriggerComponent::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor
 	if (Mover)
 	{
 		Mover->ShouldMove = false;
-	} else {
+	}
+	else
+	{
 		UE_LOG(LogTemp, Error, TEXT("Mover is null!"));
 	}
 }
