@@ -51,17 +51,24 @@ void UTriggerComponent::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AAct
                                        UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
                                        const FHitResult& SweepResult)
 {
-	if (!Mover)
+	UE_LOG(LogTemp, Display, TEXT("TriggerComponent is overlapping!"));
+	if (Mover)
 	{
 		Mover->ShouldMove = true;
+	}else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Mover is null!"));
 	}
 }
 
 void UTriggerComponent::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
                                      UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
+	UE_LOG(LogTemp, Display, TEXT("TriggerComponent is not overlapping!"));
 	if (Mover)
 	{
 		Mover->ShouldMove = false;
+	} else {
+		UE_LOG(LogTemp, Error, TEXT("Mover is null!"));
 	}
 }
