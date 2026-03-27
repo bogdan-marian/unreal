@@ -29,10 +29,16 @@ public:
 	                           FActorComponentTickFunction* ThisTickFunction) override;
 	
 	UPROPERTY(EditAnywhere)
-	bool IsPressurePlate;
-
+	bool IsPressurePlate = false;
+	
 	UPROPERTY(EditAnywhere)
 	AActor* MoverActor;
+	
+	UPROPERTY(VisibleAnywhere)
+	bool IsTriggered = false;
+	
+	void Trigger(bool NewTriggerValue);
+	
 	UMover* Mover;
 
 	// https://dev.epicgames.com/documentation/en-us/unreal-engine/cpp-only-example
