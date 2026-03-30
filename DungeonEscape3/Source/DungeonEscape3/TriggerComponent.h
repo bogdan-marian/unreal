@@ -39,6 +39,9 @@ public:
 	
 	void Trigger(bool NewTriggerValue);
 	
+	UPROPERTY(VisibleAnywhere)
+	int32 ActivatorCount = 0;
+	
 	UMover* Mover;
 
 	// https://dev.epicgames.com/documentation/en-us/unreal-engine/cpp-only-example
