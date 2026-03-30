@@ -2,6 +2,8 @@
 
 
 #include "Mover.h"
+
+#include "CborTypes.h"
 #include "Math/UnrealMathUtility.h"
 
 // Sets default values for this component's properties
@@ -21,6 +23,7 @@ void UMover::BeginPlay()
 	Super::BeginPlay();
 
 	StartLocation = GetOwner()->GetActorLocation();
+	SetShouldMove(false);
 }
 
 
@@ -53,5 +56,27 @@ void UMover::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponent
 		GetOwner()->SetActorLocation(NewLocation);
 
 		// UE_LOG(LogTemp, Display, TEXT("Mover is moving!"));
+	}
+}
+
+bool UMover::GetShouldMove()
+{
+	return ShouldMove;
+}
+
+void UMover::SetShouldMove(bool NewShouldMove)
+{
+	ShouldMove = NewShouldMove;
+	
+	if (ShouldMove)
+	{
+		// Target location is tart location + move offset
+
+		TargetLocation = StartLocation + MoveOffset;
+	}
+	else
+	{
+		// Target location is tart location
+		TargetLocation = StartLocation;
 	}
 }
