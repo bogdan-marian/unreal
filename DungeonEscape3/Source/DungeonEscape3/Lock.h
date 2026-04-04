@@ -4,9 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Lock.generated.h"
 #include "TriggerComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Lock.generated.h"
 
 UCLASS()
 class DUNGEONESCAPE3_API ALock : public AActor
