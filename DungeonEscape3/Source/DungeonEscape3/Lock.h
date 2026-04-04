@@ -12,8 +12,8 @@ UCLASS()
 class DUNGEONESCAPE3_API ALock : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	ALock();
 
@@ -21,16 +21,26 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* RootComp;
-	
+
 	UPROPERTY(VisibleAnywhere)
 	UTriggerComponent* TriggerComp;
-	
+
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* KeyItemMesh;
+
+	UPROPERTY(EditAnywhere)
+	FString KeyItemName;
+	
+	void SetIsKeyPlaced(bool NewIsKeyPlaced);
+	bool GetIsKeyPlaced();
+
+private:
+	UPROPERTY(VisibleAnywhere)
+	bool IsKeyPlaced = false;
 };
