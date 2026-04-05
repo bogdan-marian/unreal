@@ -72,6 +72,8 @@ void ADungeonEscape3Character::SetupPlayerInputComponent(UInputComponent* Player
 void ADungeonEscape3Character::Interact()
 {
 	UE_LOG(LogTemp, Display, TEXT("Interacting ... "));
+	
+	// GetWorld() -> SweepSingleByChannel();
 }
 
 
