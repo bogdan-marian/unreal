@@ -109,6 +109,9 @@ void ADungeonEscape3Character::Interact()
 			{
 				CollectableItem->ItemName;
 				UE_LOG(LogTemp, Display, TEXT("Collectableitem name: %s"), *CollectableItem->ItemName);
+				
+				ItemList.Add(CollectableItem->ItemName);
+				CollectableItem->Destroy();
 			}
 		}
 		else if (HitActor->ActorHasTag("Lock") )
