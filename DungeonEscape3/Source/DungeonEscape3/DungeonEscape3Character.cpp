@@ -107,21 +107,34 @@ void ADungeonEscape3Character::Interact()
 			ACollectableItem* CollectableItem = Cast<ACollectableItem>(HitActor);
 			if (CollectableItem)
 			{
-				CollectableItem->ItemName;
-				UE_LOG(LogTemp, Display, TEXT("Collectableitem name: %s"), *CollectableItem->ItemName);
-				
 				ItemList.Add(CollectableItem->ItemName);
 				CollectableItem->Destroy();
 			}
 		}
-		else if (HitActor->ActorHasTag("Lock") )
+		else if (HitActor->ActorHasTag("Lock"))
 		{
-			UE_LOG(LogTemp, Display, TEXT("Locked actor!"));
-			
 			ALock* LockActor = Cast<ALock>(HitActor);
 			if (LockActor)
 			{
-				UE_LOG(LogTemp, Display, TEXT("Lock is found! %s"), *LockActor->KeyItemName);
+				// 1 - is the lock empty
+				if (!LockActor->GetIsKeyPlaced())
+				{
+					int32 ItemsRemoved = ItemList.RemoveSingle(LockActor->KeyItemName);
+					UE_LOG(LogTemp, Display, TEXT("Items removed: %d"), ItemsRemoved);
+					if (ItemsRemoved)
+					{
+						LockActor->SetIsKeyPlaced(true);
+						UE_LOG(LogTemp, Display, TEXT("Key item removed from inventory!"));
+					}
+					else
+					{
+						UE_LOG(LogTemp, Display, TEXT("Key item not in inventory!"));
+					}
+				}
+
+				// 2 - do we have an item in the item list
+				// 3 - remove item from inventory
+				// 4 - activate the lock
 			}
 		}
 	}
