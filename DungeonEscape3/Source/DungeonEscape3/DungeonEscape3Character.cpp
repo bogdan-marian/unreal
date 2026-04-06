@@ -1,6 +1,8 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "DungeonEscape3Character.h"
+
+#include "CollectableItem.h"
 #include "Animation/AnimInstance.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -9,6 +11,7 @@
 #include "InputActionValue.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "DungeonEscape3.h"
+#include "Lock.h"
 
 ADungeonEscape3Character::ADungeonEscape3Character()
 {
@@ -78,12 +81,6 @@ void ADungeonEscape3Character::SetupPlayerInputComponent(UInputComponent* Player
 	}
 }
 
-void TestFuction(FVector Vector)
-{
-	Vector.X = 100.0f;
-	Vector.Y = 900.0f;
-	Vector.Z = -390.0f;
-}
 
 void ADungeonEscape3Character::Interact()
 {
@@ -94,18 +91,41 @@ void ADungeonEscape3Character::Interact()
 	FCollisionShape InteractionSphere = FCollisionShape::MakeSphere(InteractionSphereRadius);
 	DrawDebugSphere(GetWorld(), End, InteractionSphereRadius, 20, FColor::Blue, false, 5.0f);
 
-	FVector MyVec = FVector(1.0f, 2.0f, 3.0f);
-	FVector& VecRef = MyVec;
+	FHitResult HitResult;
 
+	bool HasHit = GetWorld()->SweepSingleByChannel(HitResult, Start, End, FQuat::Identity, ECC_GameTraceChannel2,
+	                                               InteractionSphere);
 
-	FVector TestVector = FVector(1.0f, 2.0f, 3.0f);
-	UE_LOG(LogTemp, Display, TEXT("MyVec %s"), *TestVector.ToCompactString());
+	if (HasHit)
+	{
+		AActor* HitActor = HitResult.GetActor();
 
-	TestFuction(TestVector);
-	
-	UE_LOG(LogTemp, Display, TEXT("MyVec %s"), *TestVector.ToCompactString());
-	
-	// GetWorld() -> SweepSingleByChannel();
+		if (HitActor->ActorHasTag("CollectableItem"))
+		{
+			// collect the item
+			UE_LOG(LogTemp, Display, TEXT("Collected item: %s"), *HitActor->GetActorNameOrLabel());
+			ACollectableItem* CollectableItem = Cast<ACollectableItem>(HitActor);
+			if (CollectableItem)
+			{
+				CollectableItem->ItemName;
+				UE_LOG(LogTemp, Display, TEXT("Collectableitem name: %s"), *CollectableItem->ItemName);
+			}
+		}
+		else if (HitActor->ActorHasTag("Lock") )
+		{
+			UE_LOG(LogTemp, Display, TEXT("Locked actor!"));
+			
+			ALock* LockActor = Cast<ALock>(HitActor);
+			if (LockActor)
+			{
+				UE_LOG(LogTemp, Display, TEXT("Lock is found! %s"), *LockActor->KeyItemName);
+			}
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Display, TEXT("No actor hit!"));
+	}
 }
 
 
