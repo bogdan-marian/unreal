@@ -117,6 +117,7 @@ void ADungeonEscape3Character::Interact()
 			if (LockActor)
 			{
 				// 1 - is the lock empty
+				UE_LOG(LogTemp, Display, TEXT("Lock is empty: %d"), LockActor->GetIsKeyPlaced());
 				if (!LockActor->GetIsKeyPlaced())
 				{
 					int32 ItemsRemoved = ItemList.RemoveSingle(LockActor->KeyItemName);
