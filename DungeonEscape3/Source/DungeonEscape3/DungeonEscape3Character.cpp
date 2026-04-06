@@ -78,6 +78,13 @@ void ADungeonEscape3Character::SetupPlayerInputComponent(UInputComponent* Player
 	}
 }
 
+void TestFuction(FVector Vector)
+{
+	Vector.X = 100.0f;
+	Vector.Y = 900.0f;
+	Vector.Z = -390.0f;
+}
+
 void ADungeonEscape3Character::Interact()
 {
 	FVector Start = FirstPersonCameraComponent->GetComponentLocation();
@@ -87,6 +94,17 @@ void ADungeonEscape3Character::Interact()
 	FCollisionShape InteractionSphere = FCollisionShape::MakeSphere(InteractionSphereRadius);
 	DrawDebugSphere(GetWorld(), End, InteractionSphereRadius, 20, FColor::Blue, false, 5.0f);
 
+	FVector MyVec = FVector(1.0f, 2.0f, 3.0f);
+	FVector& VecRef = MyVec;
+
+
+	FVector TestVector = FVector(1.0f, 2.0f, 3.0f);
+	UE_LOG(LogTemp, Display, TEXT("MyVec %s"), *TestVector.ToCompactString());
+
+	TestFuction(TestVector);
+	
+	UE_LOG(LogTemp, Display, TEXT("MyVec %s"), *TestVector.ToCompactString());
+	
 	// GetWorld() -> SweepSingleByChannel();
 }
 
