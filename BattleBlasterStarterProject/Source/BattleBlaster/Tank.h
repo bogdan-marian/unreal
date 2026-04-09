@@ -5,9 +5,11 @@
 #include "CoreMinimal.h"
 #include "BasePawn.h"
 #include "GameFramework/SpringArmComponent.h"
-
-
 #include "EnhancedInputSubsystems.h"
+
+#include "InputAction.h"
+#include "InputActionValue.h"
+#include "EnhancedInputComponent.h"
 
 #include "Tank.generated.h"
 
@@ -35,9 +37,14 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	class UInputMappingContext* DefaultMappingContext;
 	
+	UPROPERTY(EditAnywhere, Category = "Input")
+	class UInputAction* MoveAction;
+	
 	UPROPERTY(VisibleAnywhere)
 	USpringArmComponent* SpringArmComp;
 	
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* CameraComp;
+	
+	void MoveInput();
 };
