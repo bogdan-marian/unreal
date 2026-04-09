@@ -23,8 +23,9 @@ void ATank::BeginPlay()
 
 	if (bool MyBool = true)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("MyBool is true"));
+		UE_LOG(LogTemp, Display, TEXT("MyBool is true"));
 	}
+	
 }
 
 
@@ -38,19 +39,22 @@ void ATank::Tick(float DeltaTime)
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
-	{
-		if (UEnhancedInputLocalPlayerSubsystem* Subsystem =
-			ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
-		{
-			Subsystem->AddMappingContext(DefaultMappingContext, 0);
-		}
-	}
-
+	
 	if (UEnhancedInputComponent* EIC = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		EIC->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ATank::MoveInput);
+	}
+	
+	
+	// Get the Player Controller
+	if (APlayerController* PC = Cast<APlayerController>(GetController()))
+	{
+		// Get the Enhanced Input Local Player Subsystem from the Local Player
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer()))
+		{
+			// Add the Mapping Context (Priority 0)
+			Subsystem->AddMappingContext(DefaultMappingContext, 0);
+		}
 	}
 }
 
