@@ -3,6 +3,8 @@
 
 #include "Projectile.h"
 
+#include "Kismet/GameplayStatics.h"
+
 // Sets default values
 AProjectile::AProjectile()
 {
@@ -21,8 +23,8 @@ AProjectile::AProjectile()
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	ProjectileMesh -> OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
+
+	ProjectileMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
 }
 
 // Called every frame
@@ -32,10 +34,18 @@ void AProjectile::Tick(float DeltaTime)
 }
 
 void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-	FVector NormalImpulse, const FHitResult& Hit)
+                        FVector NormalImpulse, const FHitResult& Hit)
 {
-	if (OtherActor)
+	AActor* MyOwner = GetOwner();
+	if (MyOwner)
 	{
-		UE_LOG(LogTemp, Display, TEXT("Hit %s"), *OtherActor->GetActorNameOrLabel());
+		if (OtherActor
+			&& OtherActor != MyOwner
+			&& OtherActor != this)
+		{
+			UGameplayStatics::ApplyDamage(OtherActor, Damage, MyOwner->GetInstigatorController(), this,
+			                              UDamageType::StaticClass());
+		}
 	}
+	Destroy();
 }
