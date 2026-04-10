@@ -24,4 +24,14 @@ void ABattleBlasterGameMode::BeginPlay()
 			UE_LOG(LogTemp, Error, TEXT("Player Pawn is not a Tank"));
 		}
 	}
+	
+	UE_LOG(LogTemp, Display, TEXT("Start of the loop!"));
+	int32 LoopIndex = 0;
+	while (LoopIndex < 10)
+	{
+		UE_LOG(LogTemp, Display, TEXT("LoopIndex %d "), LoopIndex);
+		
+		LoopIndex++;
+	}
+	UE_LOG(LogTemp, Display, TEXT("End of the loop!"));
 }
