@@ -5,6 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Tank.h"
 #include "Tower.h"
+#include "Kismet/GameplayStatics.h"
 
 void ABattleBlasterGameMode::BeginPlay()
 {
@@ -43,4 +44,23 @@ void ABattleBlasterGameMode::BeginPlay()
 		LoopIndex++;
 	}
 	UE_LOG(LogTemp, Display, TEXT("End of the loop!"));
+}
+
+void ABattleBlasterGameMode::ActorDied(AActor* DeadActor)
+{
+	if (DeadActor->IsA<ATank>())
+	{
+		UE_LOG(LogTemp, Display, TEXT("Tank died, defeat!"));
+	}
+	if (DeadActor->IsA<ATower>())
+	{
+		UE_LOG(LogTemp, Display, TEXT("Tower died!"));
+		
+		--TowerCount;
+		UE_LOG(LogTemp, Display, TEXT("Tower Count: %d"), TowerCount);
+		if (TowerCount == 0)
+		{
+			UE_LOG(LogTemp, Display, TEXT("All towers destroyed, victory!"));
+		}
+	}
 }
