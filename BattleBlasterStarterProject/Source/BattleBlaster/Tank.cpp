@@ -26,6 +26,26 @@ void ATank::BeginPlay()
 		UE_LOG(LogTemp, Display, TEXT("MyBool is true"));
 	}
 	
+	// 2. Add the Mapping Context
+	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
+	{
+		UE_LOG(LogTemp, Display, TEXT("PlayerController is not null"));
+		if (ULocalPlayer* LocalPlayer = PlayerController->GetLocalPlayer())
+		{
+			UE_LOG(LogTemp, Display, TEXT("LocalPlayer is not null"));
+			if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LocalPlayer))
+			{
+				UE_LOG(LogTemp, Display, TEXT("Subsystem is not null"));
+				if (DefaultMappingContext == nullptr)
+				{
+					UE_LOG(LogTemp, Display, TEXT("DefaultMappingContext is null"));
+				}
+				Subsystem->AddMappingContext(DefaultMappingContext, 0);
+			}
+		}
+	}
+
+	
 }
 
 
@@ -39,23 +59,14 @@ void ATank::Tick(float DeltaTime)
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	
+    
 	if (UEnhancedInputComponent* EIC = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		EIC->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ATank::MoveInput);
 	}
+
+    
 	
-	
-	// Get the Player Controller
-	if (APlayerController* PC = Cast<APlayerController>(GetController()))
-	{
-		// Get the Enhanced Input Local Player Subsystem from the Local Player
-		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PC->GetLocalPlayer()))
-		{
-			// Add the Mapping Context (Priority 0)
-			Subsystem->AddMappingContext(DefaultMappingContext, 0);
-		}
-	}
 }
 
 void ATank::MoveInput()
