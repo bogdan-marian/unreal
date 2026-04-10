@@ -40,7 +40,12 @@ void ATank::BeginPlay()
 				{
 					UE_LOG(LogTemp, Display, TEXT("DefaultMappingContext is null"));
 				}
+				else
+				{
+					UE_LOG(LogTemp, Display, TEXT("DefaultMappingContext is not null"));
+				}
 				Subsystem->AddMappingContext(DefaultMappingContext, 0);
+				UE_LOG(LogTemp, Display, TEXT("Subsystem->AddMappingContext completed!"));
 			}
 		}
 	}
@@ -59,10 +64,13 @@ void ATank::Tick(float DeltaTime)
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	UE_LOG(LogTemp, Display, TEXT("SetupPlayerInputComponent!"));
     
 	if (UEnhancedInputComponent* EIC = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
+		UE_LOG(LogTemp, Display, TEXT("EIC is not null"));
 		EIC->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ATank::MoveInput);
+		UE_LOG(LogTemp, Display, TEXT("BindAction completed!"));
 	}
 
     
