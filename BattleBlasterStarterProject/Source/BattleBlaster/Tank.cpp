@@ -5,6 +5,7 @@
 
 #include "Camera/CameraComponent.h"
 #include "InputMappingContext.h"
+#include "Kismet/GameplayStatics.h"
 
 ATank::ATank()
 {
@@ -50,11 +51,24 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	if (UEnhancedInputComponent* EIC = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		EIC->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ATank::MoveInput);
+		EIC->BindAction(TurnAction, ETriggerEvent::Triggered, this, &ATank::TurnInput);
 	}
 }
 
 void ATank::MoveInput(const FInputActionValue& Value)
 {
 	float InputValue = Value.Get<float>();
-	UE_LOG(LogTemp, Display, TEXT("Input value %f "), InputValue);
+
+	FVector DeltaLocation = FVector(0.0f, 0.0f, 0.0f);
+	DeltaLocation.X = Speed * InputValue * UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
+	AddActorLocalOffset(DeltaLocation, true);
+}
+
+void ATank::TurnInput(const FInputActionValue& Value)
+{
+	float InputValue = Value.Get<float>();
+	
+	FRotator DeltaRotation = FRotator(0.0f, 0.0f, 0.0f);
+	DeltaRotation.Yaw = TurnRate * InputValue * UGameplayStatics::GetWorldDeltaSeconds(GetWorld());
+	AddActorLocalRotation(DeltaRotation, true);
 }
