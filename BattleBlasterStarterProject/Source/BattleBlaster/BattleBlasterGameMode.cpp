@@ -46,7 +46,18 @@ void ABattleBlasterGameMode::BeginPlay()
 
 		LoopIndex++;
 	}
-	UE_LOG(LogTemp, Display, TEXT("End of the loop!"));
+
+	CountDownSeconds = CountDownDelay;
+
+	GetWorldTimerManager().SetTimer(CountDownTimerHandle, this, &ABattleBlasterGameMode::OnCountdownTimerTimeout, 1.0f,
+	                                true);
+}
+
+
+void ABattleBlasterGameMode::OnCountdownTimerTimeout()
+{
+	CountDownSeconds -= 1;
+	UE_LOG(LogTemp, Display, TEXT("Countdown: %d"), CountDownSeconds);
 }
 
 void ABattleBlasterGameMode::ActorDied(AActor* DeadActor)
@@ -97,14 +108,12 @@ void ABattleBlasterGameMode::OnGameOverTimeout()
 			{
 				// next level
 				BattleBlasterGameInstance->LoadNextLevel();
-			}else
+			}
+			else
 			{
 				// reload current level
 				BattleBlasterGameInstance->RestartCurrentLevel();
 			}
 		}
 	}
-	
-	
-	
 }
