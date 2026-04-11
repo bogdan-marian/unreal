@@ -98,6 +98,8 @@ void ATank::SetPlayerEnabled(bool Enabled)
 {
 	if (PlayerController)
 	{
+		PlayerController->bShowMouseCursor = Enabled;
+		
 		if (Enabled)
 		{
 			EnableInput(PlayerController);
