@@ -21,8 +21,13 @@ protected:
 	
 	
 public:
+	
+	UPROPERTY(EditAnywhere)
+	float GameOverDelay = 3.0f;
+	
 	ATank* Tank;
 	int32 TowerCount;
 	
 	void ActorDied(AActor* DeadActor);
+	void OnGameOverTimeout();
 };

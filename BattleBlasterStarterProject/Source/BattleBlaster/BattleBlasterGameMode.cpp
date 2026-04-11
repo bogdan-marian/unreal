@@ -75,5 +75,18 @@ void ABattleBlasterGameMode::ActorDied(AActor* DeadActor)
 	{
 		FString GameOverString = IsVictory ? "Victory!" : "Defeat!";
 		UE_LOG(LogTemp, Display, TEXT("Game over: %s"), *GameOverString);
+
+		// start a timer and play again
+		FTimerHandle GameOverTimerHandle;
+		GetWorldTimerManager().SetTimer(GameOverTimerHandle, this, &ABattleBlasterGameMode::OnGameOverTimeout,
+		                                GameOverDelay, false);
 	}
+}
+
+void ABattleBlasterGameMode::OnGameOverTimeout()
+{
+	UE_LOG(LogTemp, Display, TEXT("Game over timeout!"));
+	
+	FString CurrentLevelName = UGameplayStatics::GetCurrentLevelName(GetWorld());
+	UGameplayStatics::OpenLevel(GetWorld(), *CurrentLevelName);
 }
