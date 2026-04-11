@@ -57,7 +57,19 @@ void ABattleBlasterGameMode::BeginPlay()
 void ABattleBlasterGameMode::OnCountdownTimerTimeout()
 {
 	CountDownSeconds -= 1;
-	UE_LOG(LogTemp, Display, TEXT("Countdown: %d"), CountDownSeconds);
+	
+	if (CountDownSeconds > 0)
+	{
+		UE_LOG(LogTemp, Display, TEXT("Countdown: %d"), CountDownSeconds);
+	} else if (CountDownSeconds == 0)
+	{
+		UE_LOG(LogTemp, Display, TEXT("Go!"));
+		Tank->SetPlayerEnabled(true);
+	} else
+	{
+		// less then zero	
+		GetWorldTimerManager().ClearTimer(CountDownTimerHandle);
+	}
 }
 
 void ABattleBlasterGameMode::ActorDied(AActor* DeadActor)
