@@ -49,7 +49,6 @@ void ABattleBlasterGameMode::BeginPlay()
 void ABattleBlasterGameMode::ActorDied(AActor* DeadActor)
 {
 	bool IsGameOver = false;
-	bool IsVictory = false;
 
 	if (DeadActor->IsA<ATank>())
 	{
@@ -85,8 +84,16 @@ void ABattleBlasterGameMode::ActorDied(AActor* DeadActor)
 
 void ABattleBlasterGameMode::OnGameOverTimeout()
 {
-	UE_LOG(LogTemp, Display, TEXT("Game over timeout!"));
 	
-	FString CurrentLevelName = UGameplayStatics::GetCurrentLevelName(GetWorld());
-	UGameplayStatics::OpenLevel(GetWorld(), *CurrentLevelName);
+	
+	
+	if (IsVictory)
+	{
+		// Load the next level
+	}else
+	{
+		// reload current level
+		FString CurrentLevelName = UGameplayStatics::GetCurrentLevelName(GetWorld());
+		UGameplayStatics::OpenLevel(GetWorld(), *CurrentLevelName);
+	}
 }
