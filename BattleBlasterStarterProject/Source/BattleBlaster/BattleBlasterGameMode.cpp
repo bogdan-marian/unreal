@@ -85,7 +85,7 @@ void ABattleBlasterGameMode::ActorDied(AActor* DeadActor)
 void ABattleBlasterGameMode::OnGameOverTimeout()
 {
 	
-	
+	FString CurrentLevelName = UGameplayStatics::GetCurrentLevelName(GetWorld());
 	
 	if (IsVictory)
 	{
@@ -93,7 +93,6 @@ void ABattleBlasterGameMode::OnGameOverTimeout()
 	}else
 	{
 		// reload current level
-		FString CurrentLevelName = UGameplayStatics::GetCurrentLevelName(GetWorld());
 		UGameplayStatics::OpenLevel(GetWorld(), *CurrentLevelName);
 	}
 }
