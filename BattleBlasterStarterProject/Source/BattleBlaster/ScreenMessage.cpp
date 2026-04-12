@@ -3,3 +3,7 @@
 
 #include "ScreenMessage.h"
 
+void UScreenMessage::SetMessageText(FString Message)
+{
+	MessageTextBlock -> SetText(FText::FromString(Message));
+}
