@@ -36,6 +36,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AProjectile> ProjectileClass;
 	
+	UPROPERTY(EditAnywhere)
+	UNiagaraSystem* DeathParticles;
+	
 	void RotateTurret(FVector LookAtTarget);
 	
 	void Fire();
