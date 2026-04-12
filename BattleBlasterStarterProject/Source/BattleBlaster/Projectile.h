@@ -32,8 +32,8 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	UProjectileMovementComponent* ProjectileMovementComp;
 	
-	UPROPERTY(VisibleAnywhere)
-	UNiagaraComponent* TrailParticles;
+	UPROPERTY(EditAnywhere, Category = "Effects")
+	UNiagaraComponent* ProjectileTrail;
 	
 	UPROPERTY(EditAnywhere)
 	UNiagaraSystem* HitParticles;
