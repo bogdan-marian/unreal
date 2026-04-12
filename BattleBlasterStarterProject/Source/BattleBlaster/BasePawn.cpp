@@ -68,4 +68,13 @@ void ABasePawn::HandleDestruction()
 	{
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), DeathSound, GetActorLocation());
 	}
+	
+	if (DeathCameraShakeClass)
+	{
+		APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+		if (PlayerController)
+		{
+			PlayerController->ClientStartCameraShake(DeathCameraShakeClass);
+		}
+	}
 }
