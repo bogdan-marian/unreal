@@ -31,9 +31,8 @@ class AShooterSamCharacter : public ACharacter
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FollowCamera;
-	
+
 protected:
-	
 	virtual void BeginPlay() override;
 
 	/** Jump Input Action */
@@ -51,22 +50,19 @@ protected:
 	/** Mouse Look Input Action */
 	UPROPERTY(EditAnywhere, Category="Input")
 	UInputAction* MouseLookAction;
-	
+
 	UPROPERTY(EditAnywhere, Category="Input")
 	UInputAction* ShootAction;
 
 public:
-
 	/** Constructor */
-	AShooterSamCharacter();	
+	AShooterSamCharacter();
 
 protected:
-
 	/** Initialize input action bindings */
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 protected:
-
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
 
@@ -74,7 +70,6 @@ protected:
 	void Look(const FInputActionValue& Value);
 
 public:
-
 	/** Handles move inputs from either controls or UI interfaces */
 	UFUNCTION(BlueprintCallable, Category="Input")
 	virtual void DoMove(float Right, float Forward);
@@ -92,19 +87,20 @@ public:
 	virtual void DoJumpEnd();
 
 public:
-
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
-	
+
 	void Shoot();
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AGun> GunClass;
-	
-	AGun* Gun;
-	
-};
 
+	AGun* Gun;
+
+	UFUNCTION()
+	void OnDamageTaken(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
+	                   class AController* InstigatedBy, AActor* DamageCauser);
+};
