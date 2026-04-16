@@ -23,4 +23,11 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(VisibleAnywhere)
+	USceneComponent* SceneRoot;
+	
+	UPROPERTY(VisibleAnywhere)
+	USkeletalMeshComponent* Mesh;
+	
+	void PullTrigger();
 };

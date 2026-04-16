@@ -9,6 +9,11 @@ AGun::AGun()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Scene Root"));
+	SetRootComponent(SceneRoot);
+	
+	Mesh =  CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
+	Mesh->SetupAttachment(SceneRoot);
 }
 
 // Called when the game starts or when spawned
@@ -23,5 +28,10 @@ void AGun::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void AGun::PullTrigger()
+{
+	UE_LOG(LogTemp, Display, TEXT("Bang"));
 }
 
