@@ -13,7 +13,6 @@
 #include "ShooterSam.h"
 
 
-
 AShooterSamCharacter::AShooterSamCharacter()
 {
 	// Set size for collision capsule
@@ -55,19 +54,19 @@ AShooterSamCharacter::AShooterSamCharacter()
 void AShooterSamCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	OnTakeAnyDamage.AddDynamic(this, &AShooterSamCharacter::OnDamageTaken);
 	Health = MaxHealth;
-	
-	GetMesh() ->HideBoneByName("weapon_r", EPhysBodyOp::PBO_None);
-	
-	Gun = GetWorld() -> SpawnActor<AGun>(GunClass);
+
+	GetMesh()->HideBoneByName("weapon_r", EPhysBodyOp::PBO_None);
+
+	Gun = GetWorld()->SpawnActor<AGun>(GunClass);
 	if (Gun)
 	{
-		Gun -> SetOwner(this);
-		Gun -> AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform,
-			TEXT("WeaponSocket"));
-		Gun -> OwnerController = GetController();
+		Gun->SetOwner(this);
+		Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform,
+		                       TEXT("WeaponSocket"));
+		Gun->OwnerController = GetController();
 	}
 }
 
@@ -87,10 +86,9 @@ void AShooterSamCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AShooterSamCharacter::Look);
-		
+
 		// Shooting
 		EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Started, this, &AShooterSamCharacter::Shoot);
-		
 	}
 	else
 	{
@@ -105,7 +103,7 @@ void AShooterSamCharacter::Move(const FInputActionValue& Value)
 {
 	// input is a Vector2D
 	FVector2D MovementVector = Value.Get<FVector2D>();
-	
+
 	//UE_LOG(LogTemp, Display, TEXT("MovemetnVector %s"), *MovementVector.ToString());
 
 	// route the input
@@ -116,7 +114,7 @@ void AShooterSamCharacter::Look(const FInputActionValue& Value)
 {
 	// input is a Vector2D
 	FVector2D LookAxisVector = Value.Get<FVector2D>();
-	
+
 	// route the input
 	DoLook(LookAxisVector.X, LookAxisVector.Y);
 }
@@ -167,15 +165,13 @@ void AShooterSamCharacter::Shoot()
 {
 	if (Gun)
 	{
-		Gun -> PullTrigger();
+		Gun->PullTrigger();
 	}
 }
 
 void AShooterSamCharacter::OnDamageTaken(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
-	class AController* InstigatedBy, AActor* DamageCauser)
+                                         class AController* InstigatedBy, AActor* DamageCauser)
 {
-	Health -= Damage;
-	
 	if (IsAlive)
 	{
 		Health -= Damage;
@@ -187,6 +183,6 @@ void AShooterSamCharacter::OnDamageTaken(AActor* DamagedActor, float Damage, con
 			UE_LOG(LogTemp, Display, TEXT("Character died: %s"), *GetActorNameOrLabel());
 		}
 	}
-	
+
 	UE_LOG(LogTemp, Display, TEXT("Damage taken: %f"), Damage);
 }
