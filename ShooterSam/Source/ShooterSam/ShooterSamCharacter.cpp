@@ -103,7 +103,7 @@ void AShooterSamCharacter::Move(const FInputActionValue& Value)
 	// input is a Vector2D
 	FVector2D MovementVector = Value.Get<FVector2D>();
 	
-	UE_LOG(LogTemp, Display, TEXT("MovemetnVector %s"), *MovementVector.ToString());
+	//UE_LOG(LogTemp, Display, TEXT("MovemetnVector %s"), *MovementVector.ToString());
 
 	// route the input
 	DoMove(MovementVector.X, MovementVector.Y);
