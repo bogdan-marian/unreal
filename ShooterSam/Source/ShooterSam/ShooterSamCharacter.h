@@ -98,6 +98,13 @@ public:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AGun> GunClass;
 
+	UPROPERTY(EditAnywhere)
+	float MaxHealth = 100.0f;
+
+	bool IsAlive = true;
+
+	float Health;
+
 	AGun* Gun;
 
 	UFUNCTION()

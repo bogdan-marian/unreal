@@ -57,6 +57,7 @@ void AShooterSamCharacter::BeginPlay()
 	Super::BeginPlay();
 	
 	OnTakeAnyDamage.AddDynamic(this, &AShooterSamCharacter::OnDamageTaken);
+	Health = MaxHealth;
 	
 	GetMesh() ->HideBoneByName("weapon_r", EPhysBodyOp::PBO_None);
 	
@@ -173,5 +174,19 @@ void AShooterSamCharacter::Shoot()
 void AShooterSamCharacter::OnDamageTaken(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
 	class AController* InstigatedBy, AActor* DamageCauser)
 {
+	Health -= Damage;
+	
+	if (IsAlive)
+	{
+		Health -= Damage;
+		if (Health <= 0.0f)
+		{
+			Health = 0.0f;
+			IsAlive = false;
+			GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+			UE_LOG(LogTemp, Display, TEXT("Character died: %s"), *GetActorNameOrLabel());
+		}
+	}
+	
 	UE_LOG(LogTemp, Display, TEXT("Damage taken: %f"), Damage);
 }
