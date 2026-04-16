@@ -12,6 +12,8 @@
 #include "InputActionValue.h"
 #include "ShooterSam.h"
 
+
+
 AShooterSamCharacter::AShooterSamCharacter()
 {
 	// Set size for collision capsule
@@ -48,6 +50,18 @@ AShooterSamCharacter::AShooterSamCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+}
+
+void AShooterSamCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	Gun = GetWorld() -> SpawnActor<AGun>(GunClass);
+	if (Gun)
+	{
+		Gun -> SetOwner(this);
+		
+	}
 }
 
 void AShooterSamCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
