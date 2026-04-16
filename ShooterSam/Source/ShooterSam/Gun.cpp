@@ -14,12 +14,18 @@ AGun::AGun()
 
 	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
 	Mesh->SetupAttachment(SceneRoot);
+	
+	MuzzleFlashParticleSystem = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Muzzle Flash"));
+	MuzzleFlashParticleSystem->SetupAttachment(Mesh);
+	
+	// ImpactParticleSystem = CreateDefaultSubobject<UNiagaraSystem>(TEXT("Impact Particle System"));
 }
 
 // Called when the game starts or when spawned
 void AGun::BeginPlay()
 {
 	Super::BeginPlay();
+	MuzzleFlashParticleSystem->Deactivate();
 }
 
 // Called every frame
@@ -30,6 +36,9 @@ void AGun::Tick(float DeltaTime)
 
 void AGun::PullTrigger()
 {
+	
+	MuzzleFlashParticleSystem->Activate(true);
+	
 	if (OwnerController)
 	{
 		
