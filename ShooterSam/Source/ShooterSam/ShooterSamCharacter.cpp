@@ -170,19 +170,20 @@ void AShooterSamCharacter::Shoot()
 }
 
 void AShooterSamCharacter::OnDamageTaken(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
-                                         class AController* InstigatedBy, AActor* DamageCauser)
+        class AController* InstigatedBy, AActor* DamageCauser)
 {
-	if (IsAlive)
-	{
-		Health -= Damage;
-		if (Health <= 0.0f)
-		{
-			Health = 0.0f;
-			IsAlive = false;
-			GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-			UE_LOG(LogTemp, Display, TEXT("Character died: %s"), *GetActorNameOrLabel());
-		}
-	}
+        if (IsAlive)
+        {
+                Health -= Damage;
+                if (Health <= 0.0f)
+                {
+                        Health = 0.0f;
+                        IsAlive = false;
+                        GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+                        GetMesh()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+                        UE_LOG(LogTemp, Display, TEXT("Character died: %s"), *GetActorNameOrLabel());
+                }
+        }
 
-	UE_LOG(LogTemp, Display, TEXT("Damage taken: %f"), Damage);
+        UE_LOG(LogTemp, Display, TEXT("Damage taken: %f"), Damage);
 }
