@@ -48,6 +48,9 @@ protected:
 	/** Mouse Look Input Action */
 	UPROPERTY(EditAnywhere, Category="Input")
 	UInputAction* MouseLookAction;
+	
+	UPROPERTY(EditAnywhere, Category="Input")
+	UInputAction* ShootAction;
 
 public:
 
@@ -92,5 +95,7 @@ public:
 
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+	
+	void Shoot();
 };
 

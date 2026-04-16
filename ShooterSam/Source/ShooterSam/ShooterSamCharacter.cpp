@@ -66,6 +66,10 @@ void AShooterSamCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AShooterSamCharacter::Look);
+		
+		// Shooting
+		EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Started, this, &AShooterSamCharacter::Shoot);
+		
 	}
 	else
 	{
@@ -92,8 +96,6 @@ void AShooterSamCharacter::Look(const FInputActionValue& Value)
 	// input is a Vector2D
 	FVector2D LookAxisVector = Value.Get<FVector2D>();
 	
-	UE_LOG(LogTemp, Display, TEXT("LookAxisVector %s"), *LookAxisVector.ToString());
-
 	// route the input
 	DoLook(LookAxisVector.X, LookAxisVector.Y);
 }
@@ -138,4 +140,9 @@ void AShooterSamCharacter::DoJumpEnd()
 {
 	// signal the character to stop jumping
 	StopJumping();
+}
+
+void AShooterSamCharacter::Shoot()
+{
+	UE_LOG(LogTemp, Display, TEXT("Shooting"));
 }
