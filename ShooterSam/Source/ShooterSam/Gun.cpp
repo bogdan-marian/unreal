@@ -32,12 +32,11 @@ void AGun::PullTrigger()
 {
 	if (OwnerController)
 	{
-		UE_LOG(LogTemp, Display, TEXT("Pulling trigger"));
 		
 		FVector ViewPointLocation;
 		FRotator ViewPointRotation;
 
-		// OwnerController->GetPlayerViewPoint(ViewPointLocation, ViewPointRotation);
+		OwnerController->GetPlayerViewPoint(ViewPointLocation, ViewPointRotation);
 		// DrawDebugCamera(GetWorld(), ViewPointLocation, ViewPointRotation, 90.f, 2.f, FColor::Red, true);
 
 		FHitResult HitResult;
@@ -46,17 +45,12 @@ void AGun::PullTrigger()
 		Params.AddIgnoredActor(GetOwner());
 		FVector EndLocation = ViewPointLocation + ViewPointRotation.Vector() * MaxRange;
 		bool IsHit = GetWorld()->LineTraceSingleByChannel(HitResult, ViewPointLocation,
-		                                                  EndLocation + ViewPointRotation.Vector(),
+		                                                  EndLocation,
 		                                                  ECC_GameTraceChannel1,
 		                                                  Params);
 		if (IsHit)
 		{
-			UE_LOG(LogTemp, Display, TEXT("Hit"));
 			DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 5.f, 16, FColor::Red, true);
-		}
-		else
-		{
-			UE_LOG(LogTemp, Display, TEXT("Miss"));
 		}
 	}
 }
