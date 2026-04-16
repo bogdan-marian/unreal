@@ -32,7 +32,7 @@ void AGun::PullTrigger()
 {
 	if (OwnerController)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Pulling trigger"));
+		UE_LOG(LogTemp, Display, TEXT("Pulling trigger"));
 		
 		FVector ViewPointLocation;
 		FRotator ViewPointRotation;
@@ -51,7 +51,12 @@ void AGun::PullTrigger()
 		                                                  Params);
 		if (IsHit)
 		{
+			UE_LOG(LogTemp, Display, TEXT("Hit"));
 			DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 5.f, 16, FColor::Red, true);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Display, TEXT("Miss"));
 		}
 	}
 }
