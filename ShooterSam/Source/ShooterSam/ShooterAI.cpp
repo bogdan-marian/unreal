@@ -29,4 +29,6 @@ void AShooterAI::Tick(float DeltaTime)
 			StopMovement();
 		}
 	}*/
+	
+	
 }
