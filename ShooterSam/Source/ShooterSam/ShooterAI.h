@@ -13,5 +13,8 @@ UCLASS()
 class SHOOTERSAM_API AShooterAI : public AAIController
 {
 	GENERATED_BODY()
+
+protected:
 	
+	virtual void BeginPlay() override;
 };
