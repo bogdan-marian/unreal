@@ -6,6 +6,23 @@
 
 #define LOG_WARNING(x) UE_LOG(LogTemp, Warning, TEXT(x))
 
+class Shape
+{
+protected:
+	int32 Sides;
+};
+
+class Rectangle: public Shape
+{
+public:
+	void SetSides();
+};
+
+void Rectangle::SetSides()
+{
+	Sides = 4;
+}
+
 // Sets default values
 AGun::AGun()
 {
@@ -31,6 +48,8 @@ void AGun::BeginPlay()
 	MuzzleFlashParticleSystem->Deactivate();
 	
 	LOG_WARNING("This is a warining Gun BeginPlay");
+	Rectangle MyRectangle;
+	MyRectangle.SetSides();
 }
 
 // Called every frame
