@@ -7,6 +7,10 @@
 void AShooterAI::BeginPlay()
 {
 	Super::BeginPlay();
+	if (EnemyAIBehaviorTree)
+	{
+		RunBehaviorTree(EnemyAIBehaviorTree);
+	}
 }
 
 void AShooterAI::Tick(float DeltaTime)

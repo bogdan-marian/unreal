@@ -20,4 +20,7 @@ protected:
 	
 public:
 	virtual void Tick(float DeltaTime) override;
+	
+	UPROPERTY(EditAnywhere)
+	UBehaviorTree* EnemyAIBehaviorTree;
 };
