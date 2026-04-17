@@ -12,5 +12,6 @@ void AShooterAI::BeginPlay()
 	if (PlayerPawn)
 	{
 		SetFocus(PlayerPawn);
+		MoveToActor(PlayerPawn, 200.0f);
 	}
 }
