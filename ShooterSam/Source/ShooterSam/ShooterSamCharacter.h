@@ -101,9 +101,11 @@ public:
 	UPROPERTY(EditAnywhere)
 	float MaxHealth = 100.0f;
 
+	UPROPERTY(BlueprintReadOnly)
 	bool IsAlive = true;
 
 	float Health;
+	
 
 	AGun* Gun;
 
