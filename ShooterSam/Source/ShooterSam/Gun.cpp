@@ -10,13 +10,27 @@ class Shape
 {
 protected:
 	int32 Sides;
+	
+public:
+	virtual void Explain();
 };
+
+void Shape::Explain()
+{
+	UE_LOG(LogTemp, Warning, TEXT("This is a Shape"));
+}
 
 class Rectangle: public Shape
 {
 public:
 	void SetSides();
+	void Explain() override;
 };
+
+void Rectangle::Explain()
+{
+	UE_LOG(LogTemp, Warning, TEXT("This is a Rectangle"));
+}
 
 void Rectangle::SetSides()
 {
@@ -46,10 +60,16 @@ void AGun::BeginPlay()
 {
 	Super::BeginPlay();
 	MuzzleFlashParticleSystem->Deactivate();
-	
-	LOG_WARNING("This is a warining Gun BeginPlay");
+
+	Shape MyShape;
 	Rectangle MyRectangle;
-	MyRectangle.SetSides();
+	// MyShape.Explain();
+	// MyRectangle.Explain();
+	
+	Shape* MyShapePointer = &MyShape;
+	Shape* MyRectanglePointer = &MyRectangle;
+	MyShapePointer->Explain();
+	MyRectanglePointer->Explain();
 }
 
 // Called every frame
