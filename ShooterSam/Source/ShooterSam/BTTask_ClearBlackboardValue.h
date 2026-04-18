@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "IAssetTools.h"
 #include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
 #include "BTTask_ClearBlackboardValue.generated.h"
 
