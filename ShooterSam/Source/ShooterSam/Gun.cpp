@@ -61,15 +61,6 @@ void AGun::BeginPlay()
 	Super::BeginPlay();
 	MuzzleFlashParticleSystem->Deactivate();
 
-	Shape MyShape;
-	Rectangle MyRectangle;
-	// MyShape.Explain();
-	// MyRectangle.Explain();
-	
-	Shape* MyShapePointer = &MyShape;
-	Shape* MyRectanglePointer = &MyRectangle;
-	MyShapePointer->Explain();
-	MyRectanglePointer->Explain();
 }
 
 // Called every frame
