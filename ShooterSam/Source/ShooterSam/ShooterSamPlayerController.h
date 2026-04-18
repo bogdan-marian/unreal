@@ -53,6 +53,7 @@ protected:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UHUDWidget> HUDWidgetClass;
 	
+public:
 	UPROPERTY(VisibleAnywhere)
 	UHUDWidget* HUDWidget;
 
