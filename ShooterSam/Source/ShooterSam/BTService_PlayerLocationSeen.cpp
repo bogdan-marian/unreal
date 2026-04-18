@@ -19,6 +19,14 @@ void UBTService_PlayerLocationSeen::TickNode(UBehaviorTreeComponent& OwnerComp, 
 	
 	if (OwnerController && Player && Blackboard)
 	{
-		
+		if (OwnerController->LineOfSightTo(Player))
+		{
+			Blackboard->SetValueAsVector(GetSelectedBlackboardKey(), Player->GetActorLocation());
+			OwnerController->SetFocus(Player);
+		}else
+		{
+			Blackboard->ClearValue(GetSelectedBlackboardKey());
+			OwnerController->ClearFocus(EAIFocusPriority::Gameplay);
+		}
 	}
 }
