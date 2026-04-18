@@ -41,7 +41,7 @@ public:
 	float MaxRange = 10000.0f;
 	
 	
-	float BulletDamage = 10.0f;
+	float BulletDamage = 35.0f;
 	
 	AController* OwnerController;
 	
