@@ -3,6 +3,7 @@
 
 #include "BTService_PlayerLocationSeen.h"
 #include "ShooterAI.h"
+#include "ShooterSam.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 UBTService_PlayerLocationSeen::UBTService_PlayerLocationSeen()
@@ -26,6 +27,7 @@ void UBTService_PlayerLocationSeen::TickNode(UBehaviorTreeComponent& OwnerComp, 
 			OwnerController->SetFocus(Player);
 		}else
 		{
+			UE_LOG(LogShooterSam, Warning, TEXT("Player not seen."));
 			Blackboard->ClearValue(GetSelectedBlackboardKey());
 			OwnerController->ClearFocus(EAIFocusPriority::Gameplay);
 		}
