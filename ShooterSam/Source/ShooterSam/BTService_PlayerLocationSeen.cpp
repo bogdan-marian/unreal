@@ -7,6 +7,7 @@
 
 UBTService_PlayerLocationSeen::UBTService_PlayerLocationSeen()
 {
+	NodeName = "Update PlayerLocation If Seen";
 }
 
 void UBTService_PlayerLocationSeen::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
