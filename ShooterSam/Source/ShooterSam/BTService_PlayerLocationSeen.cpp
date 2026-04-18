@@ -2,6 +2,8 @@
 
 
 #include "BTService_PlayerLocationSeen.h"
+#include "ShooterAI.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 UBTService_PlayerLocationSeen::UBTService_PlayerLocationSeen()
 {
@@ -11,5 +13,12 @@ void UBTService_PlayerLocationSeen::TickNode(UBehaviorTreeComponent& OwnerComp, 
 {
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 	
-	UE_LOG(LogTemp, Display, TEXT("Player location seen service ticked %f"), DeltaSeconds);
+	AShooterAI* OwnerController = Cast<AShooterAI>(OwnerComp.GetAIOwner());
+	AShooterSamCharacter* Player = OwnerController->PlayerCaracter;
+	UBlackboardComponent* Blackboard = OwnerController->GetBlackboardComponent();
+	
+	if (OwnerController && Player && Blackboard)
+	{
+		
+	}
 }
