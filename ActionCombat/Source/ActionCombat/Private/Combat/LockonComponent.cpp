@@ -105,6 +105,15 @@ void ULockonComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 
 	FVector CurrentLocation{OwnerRef->GetActorLocation()};
 	FVector TargetLocation{CurrentTargetActor->GetActorLocation()};
+	
+	double TargetDistance = FVector::Dist(CurrentLocation, TargetLocation);
+	if (TargetDistance > 1000.0f)
+	{
+		EndLockon();
+		return;
+	}
+	
+	
 	// trick to make the target apere lower so we simplify the camera look
 	TargetLocation.Z -= 125.0f;
 	

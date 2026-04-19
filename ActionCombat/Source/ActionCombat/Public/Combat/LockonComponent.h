@@ -8,39 +8,41 @@
 #include "LockonComponent.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class ACTIONCOMBAT_API ULockonComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 	ACharacter* OwnerRef;
-	
+
 	APlayerController* Controller;
-	
+
 	UCharacterMovementComponent* MovementComponent;
 
 	class USpringArmComponent* SpringArmComp;
 
-public:	
+public:
 	// Sets default values for this component's properties
 	ULockonComponent();
-	
+
 	AActor* CurrentTargetActor;
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-	
+
 	UFUNCTION(BlueprintCallable)
 	void StartLockon(float Radius = 750.0f);
 	void EndLockon();
-	
+
 	UFUNCTION(BlueprintCallable)
 	void ToggleLockon(float Radius = 750.0f);
 
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	UPROPERTY(EditAnywhere)
+	double BreakDistance{1000.0};
 
-		
+public:
+	// Called every frame
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
+	                           FActorComponentTickFunction* ThisTickFunction) override;
 };
