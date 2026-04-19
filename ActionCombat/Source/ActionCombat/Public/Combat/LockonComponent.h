@@ -33,6 +33,7 @@ protected:
 	
 	UFUNCTION(BlueprintCallable)
 	void StartLockon(float Radius = 750.0f);
+	void EndLockon();
 
 public:	
 	// Called every frame

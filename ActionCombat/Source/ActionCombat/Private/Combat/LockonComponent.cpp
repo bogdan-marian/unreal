@@ -70,6 +70,15 @@ void ULockonComponent::StartLockon(float Radius)
 	SpringArmComp -> TargetOffset = FVector(0.0f, 0.0f, 100.0f);
 }
 
+void ULockonComponent::EndLockon()
+{
+	CurrentTargetActor = nullptr;
+	MovementComponent->bOrientRotationToMovement = true;
+	MovementComponent->bUseControllerDesiredRotation = false;
+	SpringArmComp -> TargetOffset = FVector(0.0f, 0.0f, 0.0f);
+	Controller->ResetIgnoreLookInput();
+}
+
 
 // Called every frame
 void ULockonComponent::TickComponent(float DeltaTime, ELevelTick TickType,
