@@ -79,6 +79,18 @@ void ULockonComponent::EndLockon()
 	Controller->ResetIgnoreLookInput();
 }
 
+void ULockonComponent::ToggleLockon(float Radius)
+{
+	if (IsValid(CurrentTargetActor))
+	{
+		EndLockon();
+	}
+	else
+	{
+		StartLockon(Radius);
+	}
+}
+
 
 // Called every frame
 void ULockonComponent::TickComponent(float DeltaTime, ELevelTick TickType,
