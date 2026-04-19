@@ -4,6 +4,7 @@
 #include "Combat/LockonComponent.h"
 
 #include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/SpringArmComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 
 // Sets default values for this component's properties
@@ -27,6 +28,7 @@ void ULockonComponent::BeginPlay()
 	OwnerRef = GetOwner<ACharacter>();
 	Controller = GetWorld()->GetFirstPlayerController();
 	MovementComponent = OwnerRef->GetCharacterMovement();
+	SpringArmComp = OwnerRef->FindComponentByClass<USpringArmComponent>();
 }
 
 void ULockonComponent::StartLockon(float Radius)
@@ -64,6 +66,8 @@ void ULockonComponent::StartLockon(float Radius)
 	Controller->SetIgnoreLookInput(true);
 	MovementComponent->bOrientRotationToMovement = false;
 	MovementComponent->bUseControllerDesiredRotation = true;
+	
+	SpringArmComp -> TargetOffset = FVector(0.0f, 0.0f, 100.0f);
 }
 
 
@@ -80,6 +84,9 @@ void ULockonComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 
 	FVector CurrentLocation{OwnerRef->GetActorLocation()};
 	FVector TargetLocation{CurrentTargetActor->GetActorLocation()};
+	// trick to make the target apere lower so we simplify the camera look
+	TargetLocation.Z -= 125.0f;
+	
 	// calcualte rotation
 	FRotator NewRotation{
 		UKismetMathLibrary::FindLookAtRotation(CurrentLocation, TargetLocation)

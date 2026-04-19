@@ -19,6 +19,8 @@ class ACTIONCOMBAT_API ULockonComponent : public UActorComponent
 	
 	UCharacterMovementComponent* MovementComponent;
 
+	class USpringArmComponent* SpringArmComp;
+
 public:	
 	// Sets default values for this component's properties
 	ULockonComponent();
