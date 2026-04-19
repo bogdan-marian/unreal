@@ -3,6 +3,8 @@
 
 #include "Combat/LockonComponent.h"
 
+#include "GameFramework/CharacterMovementComponent.h"
+
 // Sets default values for this component's properties
 ULockonComponent::ULockonComponent()
 {
@@ -20,18 +22,22 @@ void ULockonComponent::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
+	
+	OwnerRef = GetOwner<ACharacter>();
+	Controller = GetWorld()->GetFirstPlayerController();
+	MovementComponent = OwnerRef->GetCharacterMovement();
 }
 
 void ULockonComponent::StartLockon(float Radius)
 {
 	FHitResult OutResult;
-	FVector CurrentLocation{GetOwner()->GetActorLocation()};
+	FVector CurrentLocation{OwnerRef->GetActorLocation()};
 	// create sphere collition shape
 	FCollisionShape Sphere{FCollisionShape::MakeSphere(Radius)};
 	FCollisionQueryParams IgnoreParams{
 		FName(TEXT("Ignore Collision Params")),
 		false,
-		GetOwner()
+		OwnerRef
 	};
 
 
@@ -52,8 +58,10 @@ void ULockonComponent::StartLockon(float Radius)
 		return;
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("Actor Detected: %s"),
-	       *OutResult.GetActor()->GetActorNameOrLabel());
+	Controller->SetIgnoreLookInput(true);
+	MovementComponent->bOrientRotationToMovement = false;
+	MovementComponent->bUseControllerDesiredRotation = true;
+	
 }
 
 

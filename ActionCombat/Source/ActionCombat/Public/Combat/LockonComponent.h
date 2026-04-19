@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "GameFramework/Character.h"
 #include "LockonComponent.generated.h"
 
 
@@ -11,6 +12,12 @@ UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ACTIONCOMBAT_API ULockonComponent : public UActorComponent
 {
 	GENERATED_BODY()
+
+	ACharacter* OwnerRef;
+	
+	APlayerController* Controller;
+	
+	UCharacterMovementComponent* MovementComponent;
 
 public:	
 	// Sets default values for this component's properties
