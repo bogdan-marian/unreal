@@ -22,12 +22,12 @@ void ULockonComponent::BeginPlay()
 	// ...
 }
 
-void ULockonComponent::StartLockon()
+void ULockonComponent::StartLockon(float Radius)
 {
 	FHitResult OutResult;
 	FVector CurrentLocation{GetOwner()->GetActorLocation()};
 	// create sphere collition shape
-	FCollisionShape Sphere{FCollisionShape::MakeSphere(750.0f)};
+	FCollisionShape Sphere{FCollisionShape::MakeSphere(Radius)};
 	FCollisionQueryParams IgnoreParams{
 		FName(TEXT("Ignore Collision Params")),
 		false,
