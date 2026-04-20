@@ -2,6 +2,8 @@
 
 
 #include "Combat/TraceComponent.h"
+#include "Kismet/KismetSystemLibrary.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values for this component's properties
 UTraceComponent::UTraceComponent()
@@ -44,7 +46,7 @@ void UTraceComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 		false,
 		GetOwner()
 	};
-	
+
 	bool bHasFoundTargets = GetWorld()->SweepMultiByChannel(
 		OutResults,
 		StartSocketLocation,
@@ -54,15 +56,28 @@ void UTraceComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 		Box,
 		IgnoreParams
 	);
-	
+
 	if (bHasFoundTargets)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Found %d targets"), OutResults.Num());
 	}
-	
-	// log start end and rotation 
-	// UE_LOG(LogTemp, Warning, TEXT("Start: %s - End: %s - Rotation: %s"),
-	//        *StartSocketLocation.ToString(),
-	//        *EndSocketLocation.ToString(),
-	//        *ShapeRotation.ToString());
+
+	if (bDebugMode)
+	{
+		FVector CenterPoint{
+			UKismetMathLibrary::VLerp(
+				StartSocketLocation,
+				EndSocketLocation,
+				0.5f)
+		};
+
+		UKismetSystemLibrary::DrawDebugBox(
+			GetWorld(),
+			CenterPoint,
+			Box.GetExtent(),
+			 bHasFoundTargets ? FColor::Green : FColor::Red,
+			ShapeRotation.Rotator(),
+			1.0f,
+			2.0f);
+	}
 }
