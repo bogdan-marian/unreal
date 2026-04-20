@@ -15,3 +15,8 @@ void UPlayerAnimInstance::UpdateVelocity()
 
 	CurrentVelocity = static_cast<float>(Velocity.Length());
 }
+
+void UPlayerAnimInstance::HandleUpdatedTarget(AActor* NewTargetActorRef)
+{
+	bIsInCombat = IsValid(NewTargetActorRef);
+}
