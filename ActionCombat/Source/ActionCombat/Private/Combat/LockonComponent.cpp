@@ -80,6 +80,8 @@ void ULockonComponent::StartLockon(float Radius)
 
 void ULockonComponent::EndLockon()
 {
+	IEnemy::Execute_OnDeselect(CurrentTargetActor);
+	
 	CurrentTargetActor = nullptr;
 	MovementComponent->bOrientRotationToMovement = true;
 	MovementComponent->bUseControllerDesiredRotation = false;
