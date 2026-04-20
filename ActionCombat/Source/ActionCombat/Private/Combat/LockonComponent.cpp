@@ -78,6 +78,8 @@ void ULockonComponent::StartLockon(float Radius)
 	IEnemy::Execute_OnSelect(CurrentTargetActor);
 	
 	OnUpdatedTargetDelegate.Broadcast(CurrentTargetActor);
+	
+	UE_LOG(LogTemp, Warning, TEXT("C++ log StartLockon"));
 }
 
 void ULockonComponent::EndLockon()
@@ -91,6 +93,8 @@ void ULockonComponent::EndLockon()
 	Controller->ResetIgnoreLookInput();
 	
 	OnUpdatedTargetDelegate.Broadcast(CurrentTargetActor);
+	
+	UE_LOG(LogTemp, Warning, TEXT("C++ log EndLockon"));
 }
 
 void ULockonComponent::ToggleLockon(float Radius)
