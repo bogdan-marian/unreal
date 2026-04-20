@@ -21,4 +21,10 @@ protected:
 	
 	UFUNCTION(BlueprintCallable)
 	void UpdateVelocity();
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool bIsInCombat{false};
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	float CurrentDirection{0.0f};
 };
