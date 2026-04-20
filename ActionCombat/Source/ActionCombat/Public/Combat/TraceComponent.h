@@ -22,6 +22,9 @@ class ACTIONCOMBAT_API UTraceComponent : public UActorComponent
 
 	UPROPERTY(EditAnywhere)
 	FName Rotation;
+	
+	UPROPERTY(EditAnywhere)
+	double BoxCollisionLength{30.0};
 
 public:
 	// Sets default values for this component's properties
