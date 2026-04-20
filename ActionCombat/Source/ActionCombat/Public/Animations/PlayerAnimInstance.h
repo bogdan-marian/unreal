@@ -31,4 +31,7 @@ protected:
 public:
 	UFUNCTION(BlueprintCallable)
 	void HandleUpdatedTarget(AActor* NewTargetActorRef);
+	
+	UFUNCTION(BlueprintCallable)
+	void UpdateDirection();
 };
