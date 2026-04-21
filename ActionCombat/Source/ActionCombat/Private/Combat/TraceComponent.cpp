@@ -4,6 +4,7 @@
 #include "Combat/TraceComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Interfaces/Fighter.h"
 
 // Sets default values for this component's properties
 UTraceComponent::UTraceComponent()
@@ -80,4 +81,18 @@ void UTraceComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 			1.0f,
 			2.0f);
 	}
+	
+	if (OutResults.Num() == 0)
+	{
+		return;
+	}
+	
+	float CharacterDamage{0.0f};
+	IFighter* FighterRef{Cast<IFighter>(GetOwner())};
+	if (FighterRef)
+	{
+		CharacterDamage = FighterRef->GetDamage();
+	}
+	UE_LOG(LogTemp, Warning, TEXT("Character damage: %f"), CharacterDamage);
+	
 }
