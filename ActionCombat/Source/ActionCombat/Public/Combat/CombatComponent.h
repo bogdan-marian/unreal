@@ -14,6 +14,12 @@ class ACTIONCOMBAT_API UCombatComponent : public UActorComponent
 	
 	UPROPERTY(EditAnywhere)
 	TArray<UAnimMontage*> AttackAnimations;
+	
+	ACharacter* CharacterRef;
+
+	UPROPERTY(VisibleAnywhere)
+	int ComboCounter{ 0 };
+
 
 public:	
 	// Sets default values for this component's properties
@@ -26,6 +32,8 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
+	
+	UFUNCTION(BlueprintCallable)
+	void ComboAttack();
 		
 };
