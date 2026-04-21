@@ -50,3 +50,9 @@ void UStatsComponent::ReduceHealth(float Amount)
 	Stats[EStat::Health] = UKismetMathLibrary::FClamp(Stats[EStat::Health], 0.0f, Stats[EStat::MaxHealth]);
 	UE_LOG(LogTemp, Warning, TEXT("C++ log ReduceHealth by ammount %f, New Health = %f"), Amount, Stats[EStat::Health]);
 }
+
+void UStatsComponent::ReduceStamina(float Amount)
+{
+	Stats[EStat::Stamina] -= Amount;
+	Stats[EStat::Stamina] = UKismetMathLibrary::FClamp(Stats[EStat::Stamina], 0.0f, Stats[EStat::MaxStamina]);
+}
