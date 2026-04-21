@@ -31,6 +31,8 @@ void UTraceComponent::BeginPlay()
 // Called every frame
 void UTraceComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
+	if (!bIsAttacking) { return; }
+
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
@@ -84,10 +86,7 @@ void UTraceComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 			2.0f);
 	}
 
-	if (OutResults.Num() == 0)
-	{
-		return;
-	}
+	if (OutResults.Num() == 0) { return; }
 
 	float CharacterDamage{0.0f};
 	IFighter* FighterRef{Cast<IFighter>(GetOwner())};
@@ -101,12 +100,12 @@ void UTraceComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 	for (const FHitResult& HitResult : OutResults)
 	{
 		AActor* TargetActor = HitResult.GetActor();
-		
+
 		if (TargetsToIgnore.Contains(TargetActor))
 		{
 			continue;
 		}
-		
+
 		TargetActor->TakeDamage(
 			CharacterDamage,
 			TargetAttackEvent,
