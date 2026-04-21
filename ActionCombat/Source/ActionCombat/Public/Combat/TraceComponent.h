@@ -44,5 +44,6 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
 	                           FActorComponentTickFunction* ThisTickFunction) override;
 
-	
+	UFUNCTION(BlueprintCallable)
+	void HandleResetAttack();
 };
