@@ -19,6 +19,9 @@ class ACTIONCOMBAT_API UCombatComponent : public UActorComponent
 
 	UPROPERTY(VisibleAnywhere)
 	int ComboCounter{ 0 };
+	
+	UPROPERTY(VisibleAnywhere)
+	bool bCanAttack{ true };
 
 
 public:	
@@ -35,5 +38,8 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 	void ComboAttack();
+	
+	UFUNCTION(BlueprintCallable)
+	void HandleResetAttack();
 		
 };
