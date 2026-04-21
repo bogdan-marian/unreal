@@ -28,6 +28,8 @@ class ACTIONCOMBAT_API UTraceComponent : public UActorComponent
 	
 	UPROPERTY(EditAnywhere)
 	bool bDebugMode{false};
+	
+	TArray<AActor*> TargetsToIgnore;
 
 public:
 	// Sets default values for this component's properties

@@ -101,10 +101,17 @@ void UTraceComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 	for (const FHitResult& HitResult : OutResults)
 	{
 		AActor* TargetActor = HitResult.GetActor();
+		
+		if (TargetsToIgnore.Contains(TargetActor))
+		{
+			continue;
+		}
+		
 		TargetActor->TakeDamage(
 			CharacterDamage,
 			TargetAttackEvent,
 			GetOwner()->GetInstigatorController(),
 			GetOwner());
+		TargetsToIgnore.AddUnique(TargetActor);
 	}
 }
