@@ -32,9 +32,21 @@ void UStatsComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 
 void UStatsComponent::ReduceHealth(float Amount)
 {
-	if (Stats[EStat::Health] - Amount <= 0) { return; }
+	if (!Stats.Contains(EStat::Health) || !Stats.Contains(EStat::MaxHealth))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Stats map does not contain Health or MaxHealth!"));
+		return;
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("ReduceHealth called: Current Health = %f, Amount = %f"), Stats[EStat::Health], Amount);
+
+	if (Stats[EStat::Health] <= 0) 
+	{ 
+		UE_LOG(LogTemp, Warning, TEXT("Target already dead, skipping damage."));
+		return; 
+	}
 
 	Stats[EStat::Health] -= Amount;
-	Stats[EStat::Health] = UKismetMathLibrary::FClamp(Stats[EStat::Health], 0.0f, MaxHealth);
-	UE_LOG(LogTemp, Warning, TEXT("C++ log ReduceHealth by ammount %f"), Amount);
+	Stats[EStat::Health] = UKismetMathLibrary::FClamp(Stats[EStat::Health], 0.0f, Stats[EStat::MaxHealth]);
+	UE_LOG(LogTemp, Warning, TEXT("C++ log ReduceHealth by ammount %f, New Health = %f"), Amount, Stats[EStat::Health]);
 }
