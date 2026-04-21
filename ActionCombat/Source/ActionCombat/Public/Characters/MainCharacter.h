@@ -51,5 +51,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
 	virtual float GetDamage() override;
+	
+	UFUNCTION(BlueprintCallable)
+	virtual bool HasEnoughStamina(float Cost) override;
 
 };

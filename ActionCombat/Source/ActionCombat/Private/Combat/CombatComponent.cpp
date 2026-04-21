@@ -4,6 +4,7 @@
 #include "Combat/CombatComponent.h"
 #include "GameFramework/Character.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Interfaces/MainPlayer.h"
 
 // Sets default values for this component's properties
 UCombatComponent::UCombatComponent()
@@ -35,6 +36,16 @@ void UCombatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 void UCombatComponent::ComboAttack()
 {
+	
+	if (CharacterRef->Implements<UMainPlayer>())
+	{
+		IMainPlayer* IPlayerRef = Cast<IMainPlayer>(CharacterRef);
+		if (IPlayerRef && !IPlayerRef->HasEnoughStamina(StaminaCost))
+		{
+			return;
+		}
+	}
+	
 	if (!bCanAttack)
 	{
 		return;
