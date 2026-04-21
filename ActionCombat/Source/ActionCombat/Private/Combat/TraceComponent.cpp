@@ -2,6 +2,8 @@
 
 
 #include "Combat/TraceComponent.h"
+
+#include "Engine/DamageEvents.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Interfaces/Fighter.h"
@@ -76,23 +78,33 @@ void UTraceComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 			GetWorld(),
 			CenterPoint,
 			Box.GetExtent(),
-			 bHasFoundTargets ? FColor::Green : FColor::Red,
+			bHasFoundTargets ? FColor::Green : FColor::Red,
 			ShapeRotation.Rotator(),
 			1.0f,
 			2.0f);
 	}
-	
+
 	if (OutResults.Num() == 0)
 	{
 		return;
 	}
-	
+
 	float CharacterDamage{0.0f};
 	IFighter* FighterRef{Cast<IFighter>(GetOwner())};
 	if (FighterRef)
 	{
 		CharacterDamage = FighterRef->GetDamage();
 	}
-	UE_LOG(LogTemp, Warning, TEXT("Character damage: %f"), CharacterDamage);
-	
+
+
+	FDamageEvent TargetAttackEvent;
+	for (const FHitResult& HitResult : OutResults)
+	{
+		AActor* TargetActor = HitResult.GetActor();
+		TargetActor->TakeDamage(
+			CharacterDamage,
+			TargetAttackEvent,
+			GetOwner()->GetInstigatorController(),
+			GetOwner());
+	}
 }
