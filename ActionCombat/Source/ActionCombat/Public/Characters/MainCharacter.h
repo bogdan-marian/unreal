@@ -19,6 +19,22 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	class UStatsComponent* StatsComp;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	class ULockonComponent* LockonComp;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	class UCombatComponent* CombatComp;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	class UTraceComponent* TraceComp;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	class UBlockComponent* BlockComp;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	class UPlayerActionsComponent* PlayerActionsComp;
+
 
 protected:
 	// Called when the game starts or when spawned
