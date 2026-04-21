@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Characters/EStat.h"
 #include "StatsComponent.generated.h"
 
 
@@ -17,7 +18,7 @@ public:
 	UStatsComponent();
 	
 	UPROPERTY(EditAnywhere)
-	TMap<FString, float> Stats;
+	TMap<TEnumAsByte<EStat>, float> Stats;
 
 protected:
 	// Called when the game starts
