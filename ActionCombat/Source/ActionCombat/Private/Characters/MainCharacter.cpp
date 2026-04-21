@@ -2,14 +2,16 @@
 
 
 #include "Characters/MainCharacter.h"
-
 #include "Animations/PlayerAnimInstance.h"
+#include "Characters/StatsComponent.h"
+#include  "Characters/EStat.h"
 
 // Sets default values
 AMainCharacter::AMainCharacter()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	StatsComp = CreateDefaultSubobject<UStatsComponent>(TEXT("Stats Component"));
 }
 
 // Called when the game starts or when spawned
@@ -34,5 +36,5 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 float AMainCharacter::GetDamage()
 {
-	return 10.0f;
+	return StatsComp->Stats[EStat::Strength];
 }

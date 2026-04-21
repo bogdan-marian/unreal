@@ -16,6 +16,9 @@ class ACTIONCOMBAT_API AMainCharacter : public ACharacter, public IMainPlayer, p
 public:
 	// Sets default values for this character's properties
 	AMainCharacter();
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	class UStatsComponent* StatsComp;
 
 protected:
 	// Called when the game starts or when spawned
