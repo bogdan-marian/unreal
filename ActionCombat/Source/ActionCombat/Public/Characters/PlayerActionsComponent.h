@@ -20,10 +20,10 @@ class ACTIONCOMBAT_API UPlayerActionsComponent : public UActorComponent
 	float SprintCost{0.1f};
 	
 	UPROPERTY(EditAnywhere)
-	float SprintSpeed{1200.f};
+	float SprintSpeed{1000.f};
 	
 	UPROPERTY(EditAnywhere)
-	float WalkSpeed{600.f};
+	float WalkSpeed{500.f};
 
 public:
 	// Sets default values for this component's properties
