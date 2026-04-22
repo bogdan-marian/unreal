@@ -6,6 +6,12 @@
 #include "Components/ActorComponent.h"
 #include "PlayerActionsComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_SPARSE_DELEGATE_OneParam(
+	FOnSprintSignature,
+	UPlayerActionsComponent, OnSprintDelegate,
+	float, Cost
+);
+
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class ACTIONCOMBAT_API UPlayerActionsComponent : public UActorComponent
@@ -28,6 +34,10 @@ class ACTIONCOMBAT_API UPlayerActionsComponent : public UActorComponent
 public:
 	// Sets default values for this component's properties
 	UPlayerActionsComponent();
+	
+	UPROPERTY(BlueprintAssignable)
+	FOnSprintSignature OnSprintDelegate;
+
 
 protected:
 	// Called when the game starts
