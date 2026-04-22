@@ -3,6 +3,7 @@
 
 #include "Characters/StatsComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 // Sets default values for this component's properties
 UStatsComponent::UStatsComponent()
@@ -38,12 +39,13 @@ void UStatsComponent::ReduceHealth(float Amount)
 		return;
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("ReduceHealth called: Current Health = %f, Amount = %f"), Stats[EStat::Health], Amount);
+	UE_LOG(LogTemp, Warning, TEXT("ReduceHealth called: Current Health = %f, Amount = %f"), Stats[EStat::Health],
+	       Amount);
 
-	if (Stats[EStat::Health] <= 0) 
-	{ 
+	if (Stats[EStat::Health] <= 0)
+	{
 		UE_LOG(LogTemp, Warning, TEXT("Target already dead, skipping damage."));
-		return; 
+		return;
 	}
 
 	Stats[EStat::Health] -= Amount;
@@ -55,4 +57,34 @@ void UStatsComponent::ReduceStamina(float Amount)
 {
 	Stats[EStat::Stamina] -= Amount;
 	Stats[EStat::Stamina] = UKismetMathLibrary::FClamp(Stats[EStat::Stamina], 0.0f, Stats[EStat::MaxStamina]);
+	
+	bCanRegen = false;
+	FLatentActionInfo FunctionInfo{
+		0,
+		100,
+		TEXT("EnableRegen"),
+		this
+	};
+	UKismetSystemLibrary::RetriggerableDelay(
+			GetWorld(),
+			StaminaDelayDuration,
+			FunctionInfo
+		);
+}
+
+void UStatsComponent::RegenStamina()
+{
+	if (!bCanRegen) { return; }
+
+	Stats[EStat::Stamina] = UKismetMathLibrary::FInterpTo_Constant(
+		Stats[EStat::Stamina],
+		Stats[EStat::MaxStamina],
+		GetWorld()->DeltaTimeSeconds,
+		StaminaRegenRate
+	);
+}
+
+void UStatsComponent::EnableRegen()
+{
+	bCanRegen = true;
 }
