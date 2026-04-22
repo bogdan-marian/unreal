@@ -5,6 +5,7 @@
 #include "Characters/StatsComponent.h"
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Characters/EEnemyState.h"
 
 // Sets default values
 ABossCharacter::ABossCharacter()
@@ -42,7 +43,14 @@ void ABossCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 void ABossCharacter::DetectPawn(APawn* DetectedPawn, APawn* PwnToDetect)
 {
-	if (DetectedPawn != PwnToDetect) { return; }
+	EEnemyState CurrentState{
+		static_cast<EEnemyState>(BlackboardComp->GetValueAsEnum(TEXT("CurrentState")))
+	};
 
-	UE_LOG(LogTemp, Warning, TEXT("Player Dectected!"));
+	if (DetectedPawn != PwnToDetect || CurrentState != EEnemyState::Idle) { return; }
+
+	BlackboardComp->SetValueAsEnum(
+		TEXT("CurrentState"),
+		EEnemyState::Range
+	);
 }
