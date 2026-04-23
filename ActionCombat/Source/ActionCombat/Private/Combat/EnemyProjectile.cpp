@@ -4,6 +4,7 @@
 #include "Combat/EnemyProjectile.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Components/SphereComponent.h"
 
 
 // Sets default values
@@ -36,4 +37,22 @@ void AEnemyProjectile::HandleBeginOverlap(AActor* OtherActor)
 
 	FindComponentByClass<UProjectileMovementComponent>()
 		->StopMovementImmediately();
+
+
+	FTimerHandle DeathTimerHandle{};
+	GetWorldTimerManager().SetTimer(
+		DeathTimerHandle,
+		this,
+		&AEnemyProjectile::DestroyProjectile,
+		0.5f,
+		false
+	);
+
+	FindComponentByClass<USphereComponent>()
+		->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
+void AEnemyProjectile::DestroyProjectile()
+{
+	Destroy();
 }
