@@ -18,6 +18,9 @@ class ACTIONCOMBAT_API ULookAtPlayerComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	ULookAtPlayerComponent();
+	
+	UPROPERTY(VisibleAnywhere)
+	bool bCanRotate{false};
 
 protected:
 	// Called when the game starts
