@@ -27,6 +27,11 @@ public:
 	class UStatsComponent* StatsComp;
 	
 	virtual float GetDamage() override;
+	
+	virtual void Attack() override ;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class UCombatComponent* CombatComp;
 
 protected:
 	// Called when the game starts or when spawned

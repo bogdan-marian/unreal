@@ -6,6 +6,7 @@
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Characters/EEnemyState.h"
+#include "Combat/CombatComponent.h"
 
 // Sets default values
 ABossCharacter::ABossCharacter()
@@ -14,11 +15,18 @@ ABossCharacter::ABossCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 
 	StatsComp = CreateDefaultSubobject<UStatsComponent>(TEXT("Stats Component"));
+	
+	CombatComp = CreateDefaultSubobject<UCombatComponent>(TEXT("Combat Component"));
 }
 
 float ABossCharacter::GetDamage()
 {
 	return StatsComp->Stats[EStat::Strength];
+}
+
+void ABossCharacter::Attack()
+{
+	CombatComp->RandomAttack();
 }
 
 // Called when the game starts or when spawned

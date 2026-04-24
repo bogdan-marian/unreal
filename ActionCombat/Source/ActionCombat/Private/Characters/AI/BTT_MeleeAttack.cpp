@@ -5,6 +5,8 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "AIController.h"
 #include "Navigation/PathFollowingComponent.h"
+#include "Interfaces/Fighter.h"
+#include "GameFramework/Character.h"
 
 EBTNodeResult::Type UBTT_MeleeAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
@@ -31,6 +33,12 @@ EBTNodeResult::Type UBTT_MeleeAttack::ExecuteTask(UBehaviorTreeComponent& OwnerC
 		
 		
 	}
+	else
+	{
+		IFighter* FighterRef = Cast<IFighter>(OwnerComp.GetAIOwner()->GetCharacter());
+		FighterRef->Attack();
+	}
+	
 
 	return EBTNodeResult::InProgress;
 }
