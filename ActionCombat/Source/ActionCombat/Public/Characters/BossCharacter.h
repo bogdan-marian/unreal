@@ -29,6 +29,8 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UCombatComponent* CombatComp;
+	
+	virtual float GetMeleeRange() override;
 
 protected:
 	// Called when the game starts or when spawned

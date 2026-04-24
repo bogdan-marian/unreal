@@ -25,8 +25,7 @@ class ACTIONCOMBAT_API UBTT_MeleeAttack : public UBTTaskNode
 	
 	bool bIsFinished{false};
 	
-	UPROPERTY(EditAnywhere)
-	float MeleeRange{1250.0f};
+
 protected:
 	virtual EBTNodeResult::Type ExecuteTask(
 		UBehaviorTreeComponent& OwnerComp,

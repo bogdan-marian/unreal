@@ -34,6 +34,11 @@ float ABossCharacter::GetAnimDuration()
 	return CombatComp->AnimDuration;
 }
 
+float ABossCharacter::GetMeleeRange()
+{
+	return StatsComp->Stats[EStat::MeleeRange];
+}
+
 // Called when the game starts or when spawned
 void ABossCharacter::BeginPlay()
 {
