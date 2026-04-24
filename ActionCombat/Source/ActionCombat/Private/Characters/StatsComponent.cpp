@@ -84,3 +84,8 @@ void UStatsComponent::EnableRegen()
 {
 	bCanRegen = true;
 }
+
+float UStatsComponent::GetStatPercentage(EStat Current, EStat Max)
+{
+	return Stats[Current] / Stats[Max];
+}
