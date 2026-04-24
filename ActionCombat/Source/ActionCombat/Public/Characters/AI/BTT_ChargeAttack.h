@@ -13,10 +13,15 @@ UCLASS()
 class ACTIONCOMBAT_API UBTT_ChargeAttack : public UBTTaskNode
 {
 	GENERATED_BODY()
-	
+
+	AAIController* ControllerRef;
+
+	ACharacter* CharacterRef;
+
+	class UBossAnimInstance* BossAnim;
+
 public:
 	virtual EBTNodeResult::Type ExecuteTask(
-		UBehaviorTreeComponent& OwnerComp, 
+		UBehaviorTreeComponent& OwnerComp,
 		uint8* NodeMemory) override;
-	
 };
