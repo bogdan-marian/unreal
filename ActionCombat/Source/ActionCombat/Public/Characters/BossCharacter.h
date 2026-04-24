@@ -6,10 +6,11 @@
 #include "GameFramework/Character.h"
 #include "Interfaces/Enemy.h"
 #include "Characters/EEnemyState.h"
+#include "Interfaces/Fighter.h"
 #include "BossCharacter.generated.h"
 
 UCLASS()
-class ACTIONCOMBAT_API ABossCharacter : public ACharacter, public IEnemy
+class ACTIONCOMBAT_API ABossCharacter : public ACharacter, public IEnemy, public IFighter
 {
 	GENERATED_BODY()
 
@@ -24,6 +25,8 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	class UStatsComponent* StatsComp;
+	
+	virtual float GetDamage() override;
 
 protected:
 	// Called when the game starts or when spawned
