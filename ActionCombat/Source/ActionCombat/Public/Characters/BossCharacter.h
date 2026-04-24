@@ -26,9 +26,6 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	class UStatsComponent* StatsComp;
 	
-	virtual float GetDamage() override;
-	
-	virtual void Attack() override ;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UCombatComponent* CombatComp;
@@ -46,4 +43,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void DetectPawn(APawn* DetectedPawn, APawn* PwnToDetect);
+	
+	
+	virtual float GetDamage() override;
+	
+	virtual void Attack() override ;
+	
+	virtual float GetAnimDuration() override;
 };

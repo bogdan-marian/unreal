@@ -37,6 +37,8 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnAttackPerformedSignature OnAttackPerformedDelegate;
+	
+	float AnimDuration;
 
 protected:
 	// Called when the game starts

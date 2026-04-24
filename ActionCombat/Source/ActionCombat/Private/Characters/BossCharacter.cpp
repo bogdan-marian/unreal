@@ -29,6 +29,11 @@ void ABossCharacter::Attack()
 	CombatComp->RandomAttack();
 }
 
+float ABossCharacter::GetAnimDuration()
+{
+	return CombatComp->AnimDuration;
+}
+
 // Called when the game starts or when spawned
 void ABossCharacter::BeginPlay()
 {
