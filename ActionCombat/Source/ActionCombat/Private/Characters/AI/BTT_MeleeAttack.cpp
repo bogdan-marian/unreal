@@ -8,6 +8,9 @@
 
 EBTNodeResult::Type UBTT_MeleeAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
+	
+	bIsFinished = false;
+	
 	float Distance{
 		OwnerComp.GetBlackboardComponent()->GetValueAsFloat(TEXT("Distance"))
 	};
@@ -18,8 +21,15 @@ EBTNodeResult::Type UBTT_MeleeAttack::ExecuteTask(UBehaviorTreeComponent& OwnerC
 		FAIMoveRequest MoveRequest{PlayerRef};
 		MoveRequest.SetUsePathfinding(true);
 		MoveRequest.SetAcceptanceRadius(AcceptableRadius);
+		
+		OwnerComp.GetAIOwner()->ReceiveMoveCompleted.AddUnique(
+        			MoveDelegate	
+        		);
+		
 		OwnerComp.GetAIOwner()->MoveTo(MoveRequest);
 		OwnerComp.GetAIOwner()->SetFocus(PlayerRef);
+		
+		
 	}
 
 	return EBTNodeResult::InProgress;
@@ -27,4 +37,20 @@ EBTNodeResult::Type UBTT_MeleeAttack::ExecuteTask(UBehaviorTreeComponent& OwnerC
 
 void UBTT_MeleeAttack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
+	if (!bIsFinished){return;}
+	
+	OwnerComp.GetAIOwner()->ReceiveMoveCompleted.Remove(MoveDelegate);
+	
+	FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
+}
+
+UBTT_MeleeAttack::UBTT_MeleeAttack()
+{
+	MoveDelegate.BindUFunction(this, "FinishAttackTask");
+	bNotifyTick = true;
+}
+
+void UBTT_MeleeAttack::FinishAttackTask()
+{
+	bIsFinished = true;
 }

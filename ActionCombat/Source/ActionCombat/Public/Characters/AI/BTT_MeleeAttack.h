@@ -20,6 +20,10 @@ class ACTIONCOMBAT_API UBTT_MeleeAttack : public UBTTaskNode
 	
 	UPROPERTY(EditAnywhere)
 	float AcceptableRadius{100.0f};
+	
+	FScriptDelegate MoveDelegate;
+	
+	bool bIsFinished{false};
 protected:
 	virtual EBTNodeResult::Type ExecuteTask(
 		UBehaviorTreeComponent& OwnerComp,
@@ -29,4 +33,10 @@ protected:
 		UBehaviorTreeComponent& OwnerComp,
 		uint8* NodeMemory,
 		float DeltaSeconds) override;
+	
+public:
+	UBTT_MeleeAttack();
+	
+	UFUNCTION()
+	void FinishAttackTask();
 };
