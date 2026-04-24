@@ -39,18 +39,14 @@ void UStatsComponent::ReduceHealth(float Amount)
 		return;
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("ReduceHealth called: Current Health = %f, Amount = %f"), Stats[EStat::Health],
-	       Amount);
 
 	if (Stats[EStat::Health] <= 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Target already dead, skipping damage."));
 		return;
 	}
 
 	Stats[EStat::Health] -= Amount;
 	Stats[EStat::Health] = UKismetMathLibrary::FClamp(Stats[EStat::Health], 0.0f, Stats[EStat::MaxHealth]);
-	UE_LOG(LogTemp, Warning, TEXT("C++ log ReduceHealth by ammount %f, New Health = %f"), Amount, Stats[EStat::Health]);
 }
 
 void UStatsComponent::ReduceStamina(float Amount)
