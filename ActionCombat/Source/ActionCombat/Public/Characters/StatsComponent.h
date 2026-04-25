@@ -7,18 +7,22 @@
 #include "Characters/EStat.h"
 #include "StatsComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_SPARSE_DELEGATE_OneParam(
+	FOnHealthPercentUpdateSignature,
+	UStatsComponent, OnHealthPercentUpdateDelegate,
+	float, Percentage);
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class ACTIONCOMBAT_API UStatsComponent : public UActorComponent
 {
 	GENERATED_BODY()
-	
+
 	UPROPERTY(EditAnywhere)
 	double StaminaRegenRate{10.0};
-	
+
 	UPROPERTY(VisibleAnywhere)
 	bool bCanRegen{true};
-	
+
 	UPROPERTY(EditAnywhere)
 	float StaminaDelayDuration{2.0f};
 
@@ -28,6 +32,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	TMap<TEnumAsByte<EStat>, float> Stats;
+	
+	UPROPERTY(BlueprintAssignable)
+	FOnHealthPercentUpdateSignature OnHealthPercentUpdateDelegate;
 
 protected:
 	// Called when the game starts
@@ -46,10 +53,10 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void RegenStamina();
-	
+
 	UFUNCTION()
 	void EnableRegen();
-	
+
 	UFUNCTION(BlueprintPure)
 	float GetStatPercentage(EStat Current, EStat Max);
 };
