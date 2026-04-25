@@ -59,10 +59,13 @@ void ABossCharacter::BeginPlay()
 		InitialState
 	);
 
-	GetWorld()
-		->GetFirstPlayerController()
-		->GetPawn<AMainCharacter>()
-		->OnZeroHealthDelegate.AddDynamic(this, &ABossCharacter::HandlePlayerDeath);
+	if (AMainCharacter* PlayerCharacter = GetWorld()->GetFirstPlayerController()->GetPawn<AMainCharacter>())
+	{
+		if (PlayerCharacter->StatsComp)
+		{
+			PlayerCharacter->StatsComp->OnZeroHealthDelegate.AddDynamic(this, &ABossCharacter::HandlePlayerDeath);
+		}
+	}
 }
 
 // Called every frame
