@@ -37,6 +37,8 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	class UPlayerActionsComponent* PlayerActionsComp;
+	
+	virtual void EndLockonWithActor(AActor* ActorRef) override;
 
 
 protected:
