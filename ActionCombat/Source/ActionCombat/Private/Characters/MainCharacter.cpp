@@ -69,6 +69,8 @@ void AMainCharacter::HandleDeath()
 
 bool AMainCharacter::CanTakeDamage(AActor* Opponent)
 {
+	if (PlayerActionsComp->bIsRollActive) { return false; }
+	
 	if (PlayerAnim->bIsBlocking)
 	{
 		return BlockComp->Check(Opponent);
