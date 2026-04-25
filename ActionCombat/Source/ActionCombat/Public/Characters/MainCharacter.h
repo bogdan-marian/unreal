@@ -12,6 +12,9 @@ UCLASS()
 class ACTIONCOMBAT_API AMainCharacter : public ACharacter, public IMainPlayer, public IFighter
 {
 	GENERATED_BODY()
+	
+	UPROPERTY(EditAnywhere)
+	UAnimMontage* DeathAnimMontage;
 
 public:
 	// Sets default values for this character's properties
@@ -55,4 +58,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual bool HasEnoughStamina(float Cost) override;
 
+	UFUNCTION(BlueprintCallable)
+	void HandleDeath();
 };
