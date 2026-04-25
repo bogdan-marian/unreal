@@ -41,15 +41,28 @@ float ABossCharacter::GetAnimDuration()
 void ABossCharacter::HandlePlayerDeath()
 {
 	ControllerRef->GetBlackboardComponent()
-	                              ->SetValueAsEnum(
-		                              TEXT("CurrentState"), EEnemyState::GameOver);
+	             ->SetValueAsEnum(
+		             TEXT("CurrentState"), EEnemyState::GameOver);
 }
 
 void ABossCharacter::HandleDeath()
 {
-	PlayAnimMontage(DeathAnim);
+	float Duration = PlayAnimMontage(DeathAnim);
 	ControllerRef->GetBrainComponent()->StopLogic("defeated");
 	FindComponentByClass<UCapsuleComponent>()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	FTimerHandle DestroyTimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(
+		DestroyTimerHandle,
+		this,
+		&ABossCharacter::FinishDeathAnim,
+		Duration,
+		false);
+}
+
+void ABossCharacter::FinishDeathAnim()
+{
+	Destroy();
 }
 
 float ABossCharacter::GetMeleeRange()
@@ -61,9 +74,9 @@ float ABossCharacter::GetMeleeRange()
 void ABossCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	ControllerRef = GetController<AAIController>();
-	
+
 	BlackboardComp = ControllerRef
 		->GetBlackboardComponent();
 
