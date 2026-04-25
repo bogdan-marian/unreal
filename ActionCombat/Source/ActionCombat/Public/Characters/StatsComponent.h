@@ -17,6 +17,10 @@ DECLARE_DYNAMIC_MULTICAST_SPARSE_DELEGATE_OneParam(
 	UStatsComponent, OnStaminaPercentUpdateDelegate,
 	float, Percentage);
 
+DECLARE_DYNAMIC_MULTICAST_SPARSE_DELEGATE(
+	FOnZeroHealthSignature,
+	UStatsComponent, OnZeroHealthDelegate);
+
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class ACTIONCOMBAT_API UStatsComponent : public UActorComponent
 {
@@ -30,6 +34,7 @@ class ACTIONCOMBAT_API UStatsComponent : public UActorComponent
 
 	UPROPERTY(EditAnywhere)
 	float StaminaDelayDuration{2.0f};
+	
 
 public:
 	// Sets default values for this component's properties
@@ -43,6 +48,9 @@ public:
 	
 	UPROPERTY(BlueprintAssignable)
 	FOnStaminaPercentUpdateSignature OnStaminaPercentUpdateDelegate;
+	
+	UPROPERTY(BlueprintAssignable)
+	FOnZeroHealthSignature OnZeroHealthDelegate;
 
 protected:
 	// Called when the game starts
