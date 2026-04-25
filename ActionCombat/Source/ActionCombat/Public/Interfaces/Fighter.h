@@ -14,7 +14,9 @@ class UFighter : public UInterface
 };
 
 /**
- * 
+ * Interface representing a fighter with abilities commonly required for combat scenarios.
+ * Classes implementing this interface should provide functionality for managing damage, executing attacks,
+ * handling animation durations, and determining melee attack ranges.
  */
 class ACTIONCOMBAT_API IFighter
 {
@@ -26,4 +28,5 @@ public:
 	virtual void Attack() {}
 	virtual  float GetAnimDuration() { return 0.0f; }
 	virtual float GetMeleeRange() { return 0.0f; }
+	virtual bool CanTakeDamage (AActor* Opponent) { return true; }
 };

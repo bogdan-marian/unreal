@@ -62,7 +62,7 @@ public:
 	                           FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable)
-	void ReduceHealth(float Amount);
+	void ReduceHealth(float Amount, AActor* Opponent);
 
 	UFUNCTION(BlueprintCallable)
 	void ReduceStamina(float Amount);

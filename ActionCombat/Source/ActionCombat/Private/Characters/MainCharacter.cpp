@@ -66,3 +66,12 @@ void AMainCharacter::HandleDeath()
 	PlayAnimMontage(DeathAnimMontage);
 	DisableInput(GetController<APlayerController>());
 }
+
+bool AMainCharacter::CanTakeDamage(AActor* Opponent)
+{
+	if (PlayerAnim->bIsBlocking)
+	{
+		return BlockComp->Check(Opponent);
+	}
+	return true;
+}
