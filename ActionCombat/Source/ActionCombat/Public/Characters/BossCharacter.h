@@ -52,4 +52,7 @@ public:
 	virtual void Attack() override ;
 	
 	virtual float GetAnimDuration() override;
+	
+	UFUNCTION()
+	void HandlePlayerDeath();
 };

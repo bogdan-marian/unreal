@@ -7,6 +7,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Characters/EEnemyState.h"
 #include "Combat/CombatComponent.h"
+#include "Characters/MainCharacter.h"
 
 // Sets default values
 ABossCharacter::ABossCharacter()
@@ -15,7 +16,7 @@ ABossCharacter::ABossCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 
 	StatsComp = CreateDefaultSubobject<UStatsComponent>(TEXT("Stats Component"));
-	
+
 	CombatComp = CreateDefaultSubobject<UCombatComponent>(TEXT("Combat Component"));
 }
 
@@ -34,6 +35,13 @@ float ABossCharacter::GetAnimDuration()
 	return CombatComp->AnimDuration;
 }
 
+void ABossCharacter::HandlePlayerDeath()
+{
+	GetController<AAIController>()->GetBlackboardComponent()
+	                              ->SetValueAsEnum(
+		                              TEXT("CurrentState"), EEnemyState::GameOver);
+}
+
 float ABossCharacter::GetMeleeRange()
 {
 	return StatsComp->Stats[EStat::MeleeRange];
@@ -50,6 +58,11 @@ void ABossCharacter::BeginPlay()
 		TEXT("CurrentState"),
 		InitialState
 	);
+
+	GetWorld()
+		->GetFirstPlayerController()
+		->GetPawn<AMainCharacter>()
+		->OnZeroHealthDelegate.AddDynamic(this, &ABossCharacter::HandlePlayerDeath);
 }
 
 // Called every frame
