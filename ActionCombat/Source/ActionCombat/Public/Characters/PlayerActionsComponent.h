@@ -42,7 +42,6 @@ class ACTIONCOMBAT_API UPlayerActionsComponent : public UActorComponent
 	UPROPERTY(EditAnywhere)
 	float RollCost{5.0f};
 	
-	bool bIsRollActive {false};
 
 public:
 	// Sets default values for this component's properties
@@ -53,6 +52,10 @@ public:
 	
 	UPROPERTY(BlueprintAssignable)
 	FOnRollSignature OnRollDelegate;
+	
+	
+	UPROPERTY(BlueprintReadOnly, Category = "Actions")
+	bool bIsRollActive {false};
 
 
 protected:
