@@ -27,8 +27,8 @@ AMainCharacter::AMainCharacter()
 
 void AMainCharacter::EndLockonWithActor(AActor* ActorRef)
 {
-	if (LockonComp -> CurrentTargetActor != ActorRef) { return; }
-	LockonComp -> EndLockon();
+	if (LockonComp->CurrentTargetActor != ActorRef) { return; }
+	LockonComp->EndLockon();
 }
 
 // Called when the game starts or when spawned
@@ -70,7 +70,7 @@ void AMainCharacter::HandleDeath()
 bool AMainCharacter::CanTakeDamage(AActor* Opponent)
 {
 	if (PlayerActionsComp->bIsRollActive) { return false; }
-	
+
 	if (PlayerAnim->bIsBlocking)
 	{
 		return BlockComp->Check(Opponent);
@@ -78,7 +78,13 @@ bool AMainCharacter::CanTakeDamage(AActor* Opponent)
 	return true;
 }
 
-void AMainCharacter::PlayHurtAnim()
+void AMainCharacter::PlayHurtAnim(TSubclassOf<class UCameraShakeBase> CameraShakeTemplate)
 {
 	PlayAnimMontage(HurtAnimMontage);
+
+	if (CameraShakeTemplate)
+	{
+		GetController<APlayerController>()
+			->ClientStartCameraShake(CameraShakeTemplate);
+	}
 }
