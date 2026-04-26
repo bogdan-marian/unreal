@@ -7,20 +7,20 @@
 // Sets default values for this component's properties
 UEnemyProjectileComponent::UEnemyProjectileComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+        // Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
+        // off to improve performance if you don't need them.
+        PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
+        // ...
 }
 
 
 // Called when the game starts
 void UEnemyProjectileComponent::BeginPlay()
 {
-	Super::BeginPlay();
+        Super::BeginPlay();
 
-	// ...
+        // ...
 }
 
 
@@ -28,21 +28,31 @@ void UEnemyProjectileComponent::BeginPlay()
 void UEnemyProjectileComponent::TickComponent(float DeltaTime, ELevelTick TickType,
                                               FActorComponentTickFunction* ThisTickFunction)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+        Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+        // ...
 }
 
 void UEnemyProjectileComponent::SpawnProjectile(FName ComponentName, TSubclassOf<AActor> ProjectileClass)
 {
-	USceneComponent* SpawnPointComp = Cast<USceneComponent>(
-		GetOwner()->GetDefaultSubobjectByName(ComponentName));
+        UObject* Subobject = GetOwner()->GetDefaultSubobjectByName(ComponentName);
+        USceneComponent* SpawnPointComp = Cast<USceneComponent>(Subobject);
 
-	FVector SpawnLocation{SpawnPointComp->GetComponentLocation()};
+        if (!SpawnPointComp)
+        {
+                return;
+        }
 
-	FVector PlayerLocation{GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation()};
-	// calculate rotation between spawn point and player
-	FRotator SpawnRotation = UKismetMathLibrary::FindLookAtRotation(SpawnLocation, PlayerLocation);
+        FVector SpawnLocation{SpawnPointComp->GetComponentLocation()};
 
-	GetWorld()->SpawnActor(ProjectileClass, &SpawnLocation, &SpawnRotation);
+        if (!GetWorld() || !GetWorld()->GetFirstPlayerController() || !GetWorld()->GetFirstPlayerController()->GetPawn())
+        {
+                return;
+        }
+
+        FVector PlayerLocation{GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation()};
+        // calculate rotation between spawn point and player
+        FRotator SpawnRotation = UKismetMathLibrary::FindLookAtRotation(SpawnLocation, PlayerLocation);
+
+        GetWorld()->SpawnActor(ProjectileClass, &SpawnLocation, &SpawnRotation);
 }

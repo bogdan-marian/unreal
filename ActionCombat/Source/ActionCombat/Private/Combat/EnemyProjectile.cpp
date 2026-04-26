@@ -11,57 +11,64 @@
 // Sets default values
 AEnemyProjectile::AEnemyProjectile()
 {
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+        // Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+        PrimaryActorTick.bCanEverTick = true;
 }
 
 // Called when the game starts or when spawned
 void AEnemyProjectile::BeginPlay()
 {
-	Super::BeginPlay();
+        Super::BeginPlay();
 }
 
 // Called every frame
 void AEnemyProjectile::Tick(float DeltaTime)
 {
-	Super::Tick(DeltaTime);
+        Super::Tick(DeltaTime);
 }
 
 void AEnemyProjectile::HandleBeginOverlap(AActor* OtherActor)
 {
-	APawn* PawnRef{Cast<APawn>(OtherActor)};
+        if (!OtherActor) return;
+        
+        APawn* PawnRef{Cast<APawn>(OtherActor)};
 
-	if (!PawnRef->IsPlayerControlled()) { return; }
+        if (!PawnRef || !PawnRef->IsPlayerControlled()) { return; }
 
-	FindComponentByClass<UParticleSystemComponent>()
-		->SetTemplate(HitTemplate);
+        if (UParticleSystemComponent* ParticleComp = FindComponentByClass<UParticleSystemComponent>())
+        {
+                ParticleComp->SetTemplate(HitTemplate);
+        }
 
-	FindComponentByClass<UProjectileMovementComponent>()
-		->StopMovementImmediately();
+        if (UProjectileMovementComponent* ProjectileMovement = FindComponentByClass<UProjectileMovementComponent>())
+        {
+                ProjectileMovement->StopMovementImmediately();
+        }
 
+        FTimerHandle DeathTimerHandle{};
+        GetWorldTimerManager().SetTimer(
+                DeathTimerHandle,
+                this,
+                &AEnemyProjectile::DestroyProjectile,
+                0.5f,
+                false
+        );
 
-	FTimerHandle DeathTimerHandle{};
-	GetWorldTimerManager().SetTimer(
-		DeathTimerHandle,
-		this,
-		&AEnemyProjectile::DestroyProjectile,
-		0.5f,
-		false
-	);
+        if (USphereComponent* SphereComp = FindComponentByClass<USphereComponent>())
+        {
+                SphereComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+        }
 
-	FindComponentByClass<USphereComponent>()
-		->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+        FDamageEvent ProjectileAttackEvent{};
 
-	FDamageEvent ProjectileAttackEvent{};
-
-	PawnRef->TakeDamage(
-		Damage,
-		ProjectileAttackEvent,
-		PawnRef->GetController(),
-		this);
+        PawnRef->TakeDamage(
+                Damage,
+                ProjectileAttackEvent,
+                PawnRef->GetController(),
+                this);
 }
 
 void AEnemyProjectile::DestroyProjectile()
 {
-	Destroy();
+        Destroy();
 }
